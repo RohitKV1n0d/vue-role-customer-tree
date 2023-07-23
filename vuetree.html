@@ -146,7 +146,7 @@
 <body>
     <div id="app">
         <div class="row">
-            <div class="col-4">
+            <div class="col-3">
                 <!-- CEO:0, Manager:1, ASO:2, RSO:3, Sales:4 -->
                 <i class="fas fa-user-tie ceo-icon"></i> CEO |
                 <i class="fas fa-user-tie manager-icon"></i> Manager |
@@ -154,17 +154,17 @@
                 <i class="fas fa-user-friends rso-icon"></i> RSO |
                 <i class="fas fa-user-friends sales-icon"></i> Sales
                 <!-- Legends -->
-                <!-- <button @click="toggleDrag" :disabled="!dragEnabled">Toggle Drag</button> make this into a checkbox -->
 
 
-                <Tree :data="treeData" draggable="false" droppable @change="handleChange" :ondragend="handleDragEnd">
+                <Tree :data="treeData" draggable="false" @change="handleChange" :ondragend="handleDragEnd" >
                     <div slot-scope="{ data, store }" :class="{ 'red-box': data.role > MAX_ROLE }">
                         <template v-if="!data.isDragPlaceHolder">
-                            <div class="user-box" @click="toggleUserDetails(data)"
+                            <div class="user-box" @mouseenter="data.showActions = true" @mouseleave="data.showActions = false"
+                                @click="toggleUserDetails(data)"
                                 style="display: flex; align-items: center; justify-content: space-between;">
                                 <div class="name-data-side">
                                     <b v-if="data.children && data.children.length" @click="store.toggleOpen(data)">
-                                        {{ data.open ? "-" : "+" }}&nbsp;
+                                        <i :class="data.open ? 'fas fa-caret-down' : 'fas fa-caret-right'"></i>
                                     </b>
                                     <template v-if="!data.isEditing">
                                         <span @dblclick="editUser(data)">
@@ -186,7 +186,7 @@
                                             @keyup.esc="cancelEdit(data)" @blur="saveEditedUser(data)" />
                                     </template>
                                 </div>
-                                <div class="action-side">
+                                <div class="action-side" v-show="data.showActions || data.isEditing">
                                     <template v-if="!data.isEditing">
                                         <a v-if="data.role < 4" @click="addChild(data)" class="add-user-btn"><i
                                                 class="far fa-square-plus"></i></a>
@@ -227,6 +227,7 @@
                 this.text = text;
                 this.role = role;
                 this.children = children;
+                this.showActions = false;
             }
         }
 
