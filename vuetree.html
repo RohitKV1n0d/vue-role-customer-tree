@@ -232,12 +232,28 @@
         }
 
         // from Config
+        const ROLE_MAPPING_OPTIONS = {
+            CEO: {'role_level': 0, 'role_name': 'CEO', 'role_icon': 'fas fa-user-tie ceo-icon' , 'color': 'rgba(0, 0, 0, 0.753)'},
+            Manager: {'role_level': 1, 'role_name': 'Manager', 'role_icon': 'fas fa-user-tie manager-icon' , 'color': 'rgba(0, 0, 213, 0.753)'},
+            ASO: {'role_level': 2, 'role_name': 'ASO', 'role_icon': 'fas fa-user-friends aso-icon' , 'color': 'rgba(0, 213, 0, 0.753)'},
+            RSO: {'role_level': 3, 'role_name': 'RSO', 'role_icon': 'fas fa-user-friends rso-icon' , 'color': 'rgba(213, 145, 0, 0.753)'},
+            Sales: {'role_level': 4, 'role_name': 'Sales', 'role_icon': 'fas fa-user-friends sales-icon' , 'color': 'rgba(213, 0, 0, 0.753)'},
+        };
+
+
+        const ROLE_ICON_MAPPING = {
+            CEO: {'icon':ROLE_MAPPING_OPTIONS.CEO.role_icon, 'color': ROLE_MAPPING_OPTIONS.CEO.color},
+            Manager: {'icon':ROLE_MAPPING_OPTIONS.Manager.role_icon, 'color': ROLE_MAPPING_OPTIONS.Manager.color},
+            ASO: {'icon':ROLE_MAPPING_OPTIONS.ASO.role_icon, 'color': ROLE_MAPPING_OPTIONS.ASO.color},
+            RSO: {'icon':ROLE_MAPPING_OPTIONS.RSO.role_icon, 'color': ROLE_MAPPING_OPTIONS.RSO.color},
+            Sales: {'icon':ROLE_MAPPING_OPTIONS.Sales.role_icon, 'color': ROLE_MAPPING_OPTIONS.Sales.color},
+        };
         const ROLE_HIERARCHY = {
-            CEO: 0,
-            Manager: 1,
-            ASO: 2,
-            RSO: 3,
-            Sales: 4,
+            CEO: ROLE_MAPPING_OPTIONS.CEO.role_level,
+            Manager: ROLE_MAPPING_OPTIONS.Manager.role_level,
+            ASO: ROLE_MAPPING_OPTIONS.ASO.role_level,
+            RSO: ROLE_MAPPING_OPTIONS.RSO.role_level,
+            Sales: ROLE_MAPPING_OPTIONS.Sales.role_level,
         };
 
         const importData = {
