@@ -33,6 +33,13 @@
             max-width: fit-content;
             min-width: 200px;
         }
+        .details-tab{
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        
 
         /* on hover  */
         .tree-node-inner:hover {
@@ -104,26 +111,6 @@
             color: rgba(0, 213, 0, 0.753);
         }
 
-        .manager-icon {
-            color: rgba(0, 0, 213, 0.753);
-        }
-
-        .aso-icon {
-            color: rgba(0, 213, 0, 0.753);
-        }
-
-        .rso-icon {
-            color: rgba(213, 145, 0, 0.753);
-        }
-
-        .sales-icon {
-            color: rgba(213, 0, 0, 0.753);
-        }
-
-        .ceo-icon {
-            color: rgba(0, 0, 0, 0.753);
-        }
-
         .action-side {
             margin-left: 20px;
         }
@@ -140,55 +127,94 @@
             background-color: #f1f1f1;
             font-size: 12px;
         }
+        .legend-box {
+            display: flex;
+        }
+
+        .legend-box > div {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+        .form-label {
+            font-size: 16px;
+            margin: 0px;
+        }
+        .user-card-info{
+            margin-top: 20px;
+        }
+        .tree-node-selected {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .save-btn{
+            margin-top: 20px;
+            /* center */
+            margin-left: auto;
+        }
+        .float-right{
+            float: right;
+        }
+        .float-left{
+            float: left;
+        }
+        .user-tab-action-btn{
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .card .card-header{
+            box-shadow: none;
+            background-color: #fff;
+        }
     </style>
 </head>
 
 <body>
     <div id="app">
+        
         <div class="row">
-            <div class="col-3">
+            <div class="col-4">
+                <h3>User Hierarchy</h3>
                 <!-- CEO:0, Manager:1, ASO:2, RSO:3, Sales:4 -->
-                <i class="fas fa-user-tie ceo-icon"></i> CEO |
-                <i class="fas fa-user-tie manager-icon"></i> Manager |
-                <i class="fas fa-user-friends aso-icon"></i> ASO |
-                <i class="fas fa-user-friends rso-icon"></i> RSO |
-                <i class="fas fa-user-friends sales-icon"></i> Sales
+                <div class="legend-box">
+                    <div v-for="(roleName, index) in Object.keys(ROLE_ICON_MAPPING)" :key="roleName">
+                        <i :class="ROLE_ICON_MAPPING[roleName].icon" :style="{ color: ROLE_ICON_MAPPING[roleName].color }"></i>
+                        [[ roleName ]] <span v-if="index !== Object.keys(ROLE_ICON_MAPPING).length - 1">‏‏‎ ‎‏‏‎ ‎|</span>
+                    </div>
+                </div>
+                
                 <!-- Legends -->
 
 
-                <Tree :data="treeData" draggable="false" @change="handleChange" :ondragend="handleDragEnd" >
-                    <div slot-scope="{ data, store }" :class="{ 'red-box': data.role > MAX_ROLE }">
+                <Tree :data="treeData" draggable="false" @change="handleChange" :ondragend="handleDragEnd" @update="handleTreeUpdate" :indent="20">
+                    <div slot-scope="{ data, store }" :class="{
+                        'red-box': data.role > MAX_ROLE,
+                        'tree-node-selected': selectedUser === data
+                    }">
                         <template v-if="!data.isDragPlaceHolder">
                             <div class="user-box" @mouseenter="data.showActions = true" @mouseleave="data.showActions = false"
                                 @click="toggleUserDetails(data)"
                                 style="display: flex; align-items: center; justify-content: space-between;">
                                 <div class="name-data-side">
                                     <b v-if="data.children && data.children.length" @click="store.toggleOpen(data)">
-                                        <i :class="data.open ? 'fas fa-caret-down' : 'fas fa-caret-right'"></i>
+                                        <i :class="data.open ? OPEN_TRUE_ICON : OPEN_FALSE_ICON"></i>
                                     </b>
                                     <template v-if="!data.isEditing">
                                         <span @dblclick="editUser(data)">
-                                            {{ data.text }}
-                                            <i v-if="data.role === ROLE_HIERARCHY.CEO"
-                                                class="fas fa-user-tie ceo-icon"></i>
-                                            <i v-if="data.role === ROLE_HIERARCHY.Manager"
-                                                class="fas fa-user-tie manager-icon"></i>
-                                            <i v-if="data.role === ROLE_HIERARCHY.ASO"
-                                                class="fas fa-user-friends aso-icon"></i>
-                                            <i v-if="data.role === ROLE_HIERARCHY.RSO"
-                                                class="fas fa-user-friends rso-icon"></i>
-                                            <i v-if="data.role === ROLE_HIERARCHY.Sales"
-                                                class="fas fa-user-friends sales-icon"></i>
+                                            [[ data.name ]]
+                                            <i :class="getRoleIconClass(Object.keys(ROLE_HIERARCHY)[data.role])"
+                                            :style="{ color: getRoleIconColor(Object.keys(ROLE_HIERARCHY)[data.role]) }"></i>
                                         </span>
                                     </template>
                                     <template v-else>
-                                        <input type="text" v-model="data.text" @keyup.enter="saveEditedUser(data)"
+                                        <input type="text" v-model="data.name" @keyup.enter="saveEditedUser(data)"
                                             @keyup.esc="cancelEdit(data)" @blur="saveEditedUser(data)" />
                                     </template>
                                 </div>
                                 <div class="action-side" v-show="data.showActions || data.isEditing">
                                     <template v-if="!data.isEditing">
-                                        <a v-if="data.role < 4" @click="addChild(data)" class="add-user-btn"><i
+                                        <a v-if="data.role < 4" @click.stop="addChild(data)" class="add-user-btn"><i
                                                 class="far fa-square-plus"></i></a>
                                         <a @click="editUser(data)" class="edit-user-btn"><i
                                                 class="fas fa-pen-to-square"></i></a>
@@ -210,11 +236,224 @@
                 </label>
 
             </div>
-            <div class="col-6">
-                <div v-if="selectedUser">
-                    <h3>User Details</h3>
-                    <p>Name: {{ selectedUser.text }}</p>
-                    <!-- Add more details here -->
+            <div class="col-8">
+                <div class="container details-tab" v-if="selectedUser">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a :class="seletedtab === 1 ? 'nav-link active' : 'nav-link'" @click="seletedtab = 1"
+                            aria-current="page" >User Info</a>
+                        </li>
+                        <li class="nav-item">
+                            <a :class="seletedtab === 2 ? 'nav-link active' : 'nav-link'" @click="seletedtab = 2"
+                            >Associated Customers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a :class="seletedtab === 3 ? 'nav-link active' : 'nav-link'" @click="seletedtab = 3"
+                            >Products</a>
+                        </li>
+                    </ul>
+                    <div class="row" v-if="seletedtab === 1">
+                        <!-- User Information -->
+                        <div class="col-md-12 user-card-info">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div>
+                                       User Information -  [[ selectedUser.name ]]
+                                        <i class="fas fa-circle" :style="{ color: selectedUser.enabled ? 'green' : 'red' }" :title="selectedUser.enabled ? 'User Enabled' : 'User Disabled'"></i>
+                                      </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="username" class="form-label">Username</label>
+                                            <template v-if="selectedUser.isEditing">
+                                                <input type="text" class="form-control" id="username"
+                                                    v-model="selectedUser.name" required>
+                                            </template>
+                                            <template v-else>
+                                                <div class="form-control-static">[[ selectedUser.name || '_ _ _' ]]</div>
+                                            </template>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="firstName" class="form-label">First name</label>
+                                            <template v-if="selectedUser.isEditing">
+                                                <input type="text" class="form-control" id="firstName"
+                                                    v-model="selectedUser.firstName" required>
+                                            </template>
+                                            <template v-else>
+                                                <div class="form-control-static">[[ selectedUser.firstName || '_ _ _' ]]</div>
+                                            </template>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="lastName" class="form-label">Last name</label>
+                                            <template v-if="selectedUser.isEditing">
+                                                <input type="text" class="form-control" id="lastName"
+                                                    v-model="selectedUser.lastName" required>
+                                            </template>
+                                            <template v-else>
+                                                <div class="form-control-static">[[ selectedUser.lastName || '_ _ _' ]]</div>
+                                            </template>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="email" class="form-label">Email</label>
+                                            <template v-if="selectedUser.isEditing">
+                                                <input type="email" class="form-control" id="email"
+                                                    v-model="selectedUser.email" required>
+                                            </template>
+                                            <template v-else>
+                                                <div class="form-control-static">[[ selectedUser.email || '_ _ _' ]]</div>
+                                            </template>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="password" class="form-label">Password</label>
+                                            <template v-if="selectedUser.isEditing">
+                                                <input type="password" class="form-control" id="password"
+                                                    v-model="selectedUser.password" required>
+                                            </template>
+                                            <template v-else>
+                                                <div class="form-control-static">[[ selectedUser.password || '_ _ _' ]]</div>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 user-card-info">
+                            <div class="card">
+                                <div class="card-header">
+                                    User Address Info
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="phone" class="form-label">Phone</label>
+                                            <template v-if="selectedUser.isEditing">
+                                                <input type="tel" class="form-control" id="phone" v-model="selectedUser.phone" required>
+                                            </template>
+                                            <template v-else>
+                                                <div class="form-control-static">[[ selectedUser.phone || '_ _ _' ]]</div>
+                                            </template>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <label for="address" class="form-label">Address</label>
+                                            <template v-if="selectedUser.isEditing">
+                                                <input type="text" class="form-control" id="address" v-model="selectedUser.address" required>
+                                            </template>
+                                            <template v-else>
+                                                <div class="form-control-static">[[ selectedUser.address || '_ _ _' ]]</div>
+                                            </template>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="state" class="form-label">State</label>
+                                            <template v-if="selectedUser.isEditing">
+                                                <input type="text" class="form-control" id="state" v-model="selectedUser.state" required>
+                                            </template>
+                                            <template v-else>
+                                                <div class="form-control-static">[[ selectedUser.state || '_ _ _' ]]</div>
+                                            </template>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="pan" class="form-label">PAN</label>
+                                            <template v-if="selectedUser.isEditing">
+                                                <input type="text" class="form-control" id="pan" v-model="selectedUser.pan" required>
+                                            </template>
+                                            <template v-else>
+                                                <div class="form-control-static">[[ selectedUser.pan || '_ _ _' ]]</div>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-12 user-card-info">
+                            <div class="card">
+                                <div class="card-header">
+                                    User Additional Info
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <!-- Additional fields -->
+                                        <div class="col-md-6">
+                                            <label for="role" class="form-label">Role</label>
+                                            <template v-if="selectedUser.isEditing">
+                                                <!-- Modify the input type to select for role -->
+                                                <select class="form-select" id="role" v-model="selectedUser.role" required>
+                                                    <option v-for="(role, index) in Object.keys(ROLE_HIERARCHY)" :key="index" :value="index">
+                                                        [[ role || '_ _ _' ]]  <i :class="getRoleIconClass(role)" :style="{ color: getRoleIconColor(role) }"></i>
+                                                    </option>
+                                                </select>
+                                            </template>
+                                            <template v-else>
+                                                <div class="form-control-static"> 
+                                                    [[ Object.keys(ROLE_HIERARCHY)[selectedUser.role] || '_ _ _' ]]  <i :class="getRoleIconClass(Object.keys(ROLE_HIERARCHY)[selectedUser.role])" :style="{ color: getRoleIconColor(Object.keys(ROLE_HIERARCHY)[selectedUser.role]) }"></i>
+                                                </div>
+                                            </template>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="region" class="form-label">Region</label>
+                                            <template v-if="selectedUser.isEditing">
+                                                <input type="text" class="form-control" id="region" v-model="selectedUser.region" required>
+                                            </template>
+                                            <template v-else>
+                                                <div class="form-control-static">[[ selectedUser.region || '_ _ _' ]]</div>
+                                            </template>
+                                        </div>
+                        
+                                        <!-- Dropdown fields -->
+                                        <div class="col-md-6">
+                                            <label for="associatedUser" class="form-label">Associated User</label>
+                                            <template v-if="selectedUser.isEditing">
+                                               <input type="text" class="form-control" id="associatedUser" value="Drag and drop to associate user" disabled>
+                                            </template>
+                                            <template v-else>
+                                                <div class="form-control-static">[[ getAssociatedUserPath(selectedUser) || '_ _ _' ]]</div>
+                                            </template>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="groups" class="form-label">Groups (Department)</label>
+                                            <template v-if="selectedUser.isEditing">
+                                                <select class="form-select" id="groups" v-model="selectedUser.groups" required>
+                                                    <!-- Option values will be populated dynamically -->
+                                                    <!-- Replace the following example options with dynamic options -->
+                                                    <option value="group1">Group 1</option>
+                                                    <option value="group2">Group 2</option>
+                                                    <option value="group3">Group 3</option>
+                                                </select>
+                                                <button type="button" class="btn btn-secondary mt-2">Add New Group</button>
+                                            </template>
+                                            <template v-else>
+                                                <div class="form-control-static">[[ selectedUser.groups || '_ _ _' ]]</div>
+                                            </template>
+                                        </div>
+                        
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    
+                    
+                    
+                        <!-- save btn -->
+                        <div class="col-md-12 user-tab-action-btn" style="display: flex; justify-content: center; align-items: center;" v-if="selectedUser.isEditing">
+                            <div class="float-right">
+                                <!-- Enable button -->
+                                <div class="form-check" style="display: inline-block; text-align: center; margin-right: 20px;">
+                                    <input class="form-check-input" type="checkbox" id="enabled" v-model="selectedUser.enabled">
+                                    <label class="form-check-label" for="enabled">Enable User</label>
+                                </div>
+                                <div class="tab-action-btn" style="display: inline-block; text-align: center;">
+                                    <button type="button" class="btn btn-primary save-btn" @click="saveEditedUser(selectedUser)">Save</button>
+                                    <button type="button" class="btn btn-secondary cancelEdit-btn" @click="cancelEdit(selectedUser)">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+
                 </div>
             </div>
         </div>
@@ -222,16 +461,11 @@
 
 
     <script>
-        class TreeNode {
-            constructor(text, role, children = []) {
-                this.text = text;
-                this.role = role;
-                this.children = children;
-                this.showActions = false;
-            }
-        }
-
         // from Config
+        const CLOSE_OPEN_ICON_MAPPING = {
+            CLOSE: "fas fa-caret-right",
+            OPEN: "fas fa-caret-down",
+        };
         const ROLE_MAPPING_OPTIONS = {
             CEO: {'role_level': 0, 'role_name': 'CEO', 'role_icon': 'fas fa-user-tie ceo-icon' , 'color': 'rgba(0, 0, 0, 0.753)'},
             Manager: {'role_level': 1, 'role_name': 'Manager', 'role_icon': 'fas fa-user-tie manager-icon' , 'color': 'rgba(0, 0, 213, 0.753)'},
@@ -239,22 +473,56 @@
             RSO: {'role_level': 3, 'role_name': 'RSO', 'role_icon': 'fas fa-user-friends rso-icon' , 'color': 'rgba(213, 145, 0, 0.753)'},
             Sales: {'role_level': 4, 'role_name': 'Sales', 'role_icon': 'fas fa-user-friends sales-icon' , 'color': 'rgba(213, 0, 0, 0.753)'},
         };
+        // from Config
+
+        const OPEN_TRUE_ICON = CLOSE_OPEN_ICON_MAPPING.OPEN;
+        const OPEN_FALSE_ICON = CLOSE_OPEN_ICON_MAPPING.CLOSE;
+
+        
+        const ROLE_ICON_MAPPING = {};
+        for (const roleName in ROLE_MAPPING_OPTIONS) {
+            ROLE_ICON_MAPPING[roleName] = {'icon':ROLE_MAPPING_OPTIONS[roleName].role_icon, 'color': ROLE_MAPPING_OPTIONS[roleName].color};
+        }
+
+        const ROLE_HIERARCHY = {};
+        for (const roleName in ROLE_MAPPING_OPTIONS) {
+        ROLE_HIERARCHY[roleName] = ROLE_MAPPING_OPTIONS[roleName].role_level;
+        }
+              
 
 
-        const ROLE_ICON_MAPPING = {
-            CEO: {'icon':ROLE_MAPPING_OPTIONS.CEO.role_icon, 'color': ROLE_MAPPING_OPTIONS.CEO.color},
-            Manager: {'icon':ROLE_MAPPING_OPTIONS.Manager.role_icon, 'color': ROLE_MAPPING_OPTIONS.Manager.color},
-            ASO: {'icon':ROLE_MAPPING_OPTIONS.ASO.role_icon, 'color': ROLE_MAPPING_OPTIONS.ASO.color},
-            RSO: {'icon':ROLE_MAPPING_OPTIONS.RSO.role_icon, 'color': ROLE_MAPPING_OPTIONS.RSO.color},
-            Sales: {'icon':ROLE_MAPPING_OPTIONS.Sales.role_icon, 'color': ROLE_MAPPING_OPTIONS.Sales.color},
-        };
-        const ROLE_HIERARCHY = {
-            CEO: ROLE_MAPPING_OPTIONS.CEO.role_level,
-            Manager: ROLE_MAPPING_OPTIONS.Manager.role_level,
-            ASO: ROLE_MAPPING_OPTIONS.ASO.role_level,
-            RSO: ROLE_MAPPING_OPTIONS.RSO.role_level,
-            Sales: ROLE_MAPPING_OPTIONS.Sales.role_level,
-        };
+        class TreeNode {
+            constructor(name, role, showActions = false, isEditing = false, enabled = true, username = "", firstName = "", lastName = "", email = "", password = "", phone = "", address = "", state = "", pan = "", region = "", associatedUser = "", groups = "", parent = null, children = []) {
+                this.name = name;
+                this.role = role;
+                this.showActions = false;
+                this.isEditing = false;
+                this.enabled = true;
+                this.username = username;
+                this.firstName = firstName;
+                this.lastName = lastName;
+                this.email = email;
+                this.password = password;
+                this.phone = phone;
+                this.address = address;
+                this.state = state;
+                this.pan = pan;
+                this.region = region;
+                this.associatedUser = associatedUser;
+                this.groups = groups;
+                this.parent = parent;
+                this.children = children;
+                this.isDragPlaceHolder = false;
+                
+                for (const child of children) {
+                    child.parent = this; // Set the parent reference for children
+                }
+
+            }
+        }
+
+          
+        
 
         const importData = {
             "username": "CEO1",
@@ -272,22 +540,48 @@
                     "role": 1,
                     "children": {
                         
-                    }
+                    },
+                    "enabled": true,
+                    "firstName": "Manager",
+                    "lastName": "1",
+                    "email": "manager1@sample.co",
+                    "password": "manager",
+                    "phone": "1234567890",
+                    "address": "manager address",
+                    "state": "manager state",
+                    "pan": "manager pan",
+                    "region": "manager region",
+                
                 }
-            }
+            },
+            "enabled": true,
+            "firstName": "CEO",
+            "lastName": "1",
+            "email": "ceo@sample.co",
+            "password": "ceo",
+            "phone": "1234567890",
+            "address": "ceo address",
+            "state": "ceo state",
+            "pan": "ceo pan",
+            "region": "ceo region",
         };
+
+        
 
         const MAX_ROLE = Object.keys(ROLE_HIERARCHY).length - 1;
         const DraggableTree = window.vueDraggableNestedTree.DraggableTree;
 
         var app = new Vue({
             el: "#app",
+            delimiters: ["[[", "]]"],
             components: { Tree: DraggableTree },
             data: {
                 treeData: [
                     new TreeNode("CEO1", ROLE_HIERARCHY.CEO, []),
                 ],
                 newUser: "",
+                OPEN_TRUE_ICON: OPEN_TRUE_ICON,
+                OPEN_FALSE_ICON: OPEN_FALSE_ICON,
                 selectedUser: null,
                 ROLE_HIERARCHY: ROLE_HIERARCHY,
                 MAX_ROLE: MAX_ROLE,
@@ -295,20 +589,44 @@
                 exportData: '',
                 importData: importData,
                 dragEnabled: true,
+                ROLE_ICON_MAPPING: ROLE_ICON_MAPPING,
+                treeData: [],
+                toggleSelectUserEnable : false,
+                seletedtab: 1,
+                
             },
             computed: {
-
+                // 
+            },
+            watch: {
+                treeData(newValue){
+                    this.treeData = newValue;
+                },
+                exportJson(newValue){
+                    this.getExportJson();
+                    console.log(this.exportJson);
+                    
+                },
             },
             methods: {
+                handleTreeUpdate(updatedTreeData) {
+                    this.treeData = updatedTreeData;
+                },
                 toggleUserDetails(user) {
-                    this.selectedUser = this.selectedUser === user ? null : user;
+                    if(this.toggleSelectUserEnable){
+                        this.selectedUser = this.selectedUser === user ? null : user;
+                    }
+                    else{
+                        this.selectedUser = user;
+                    }
                 },
                 updateRole(user, newRole) {
-                    this.$set(user, "role", newRole);
+                    Vue.set(user, "role", newRole);
                 },
                 handleChange(node) {
                     // Recursively update the role of the node and its children
                     const updateChildRoles = (parentNode, newRole) => {
+                        this.updateRole(parentNode, newRole);
                         parentNode.role = newRole;
                         for (const childNode of parentNode.children) {
                             updateChildRoles(childNode, newRole + 1);
@@ -334,11 +652,12 @@
                 },
 
                 editUser(user) {
+                    this.selectedUser = user;
                     this.$set(user, "isEditing", true);
                 },
 
                 saveEditedUser(user) {
-                    if (user.text.trim() !== "") {
+                    if (user.name.trim() !== "") {
                         this.$set(user, "isEditing", false);
                     }
                 },
@@ -370,31 +689,64 @@
                     }
                 },
                 addChild(user) {
-                    user.children.push(new TreeNode("New User", user.role + 1, []));
+                    const newNode = new TreeNode("New "+Object.keys(ROLE_HIERARCHY)[user.role + 1]+" User", user.role + 1, true, true);
+                    user.children.push(newNode);
+                    this.editUser(newNode);
+                    this.selectedUser = newNode;
                 },
                 getExportJson() {
-                    const dfs = (node, path) => {
-                        const obj = {
-                            username: node.text,
-                            path: [...path, node.text],
-                            role: node.role,
-                            children: {}
+                    const dfs = (node) => {
+                        const newNode = {
+                            "username": node.name,
+                            "path": [],
+                            "role": node.role,
+                            "children": {},
+                            "enabled": node.enabled,
+                            "firstName": node.firstName,
+                            "lastName": node.lastName,
+                            "email": node.email,
+                            "password": node.password,
+                            "phone": node.phone,
+                            "address": node.address,
+                            "state": node.state,
+                            "pan": node.pan,
+                            "region": node.region,
+                            "associatedUser": node.associatedUser,
+                            "groups": node.groups,
                         };
-
-                        for (const [index, child] of node.children.entries()) {
-                            obj.children[index] = dfs(child, [...path, node.text]);
-                        }
-
-                        return obj;
+                        newNode.children = node.children.map(dfs);
+                        return newNode;
                     };
-
-                    const root = this.treeData[0];
-                    this.exportJson = dfs(root, []);
-                    return this.exportJson;
+                    if (this.treeData) {
+                        const rootNode = dfs(this.treeData[0]);
+                        this.exportJson = rootNode;
+                        this.exportData = JSON.stringify(rootNode);
+                    }
                 },
                 initializeTreeFromJSON(jsonData) {
                     const dfs = (jsonNode) => {
-                        const newNode = new TreeNode(jsonNode.username, jsonNode.role);
+                        const newNode = new TreeNode(jsonNode.username, 
+                                                    jsonNode.role, 
+                                                    true,
+                                                    false,
+                                                    jsonNode.enabled,
+                                                    jsonNode.username,
+                                                    jsonNode.firstName,
+                                                    jsonNode.lastName,
+                                                    jsonNode.email,
+                                                    jsonNode.password,
+                                                    jsonNode.phone,
+                                                    jsonNode.address,
+                                                    jsonNode.state,
+                                                    jsonNode.pan,
+                                                    jsonNode.region,
+                                                    jsonNode.associatedUser,
+                                                    jsonNode.groups,
+                                                    null);
+
+
+
+
                         newNode.children = Object.values(jsonNode.children).map(dfs);
                         return newNode;
                     };
@@ -402,6 +754,39 @@
                     if (jsonData) {
                         const rootNode = dfs(jsonData);
                         this.treeData = [rootNode];
+                    }
+                },
+                getRoleIconClass(roleName) {
+                    if (ROLE_ICON_MAPPING[roleName]) {
+                        return ROLE_ICON_MAPPING[roleName].icon;
+                    } else {
+                        return '';
+                    }
+                },
+                getRoleIconColor(roleName) {
+                    if (ROLE_ICON_MAPPING[roleName]) {
+                        return ROLE_ICON_MAPPING[roleName].color;
+                    } else {
+                        return '';
+                    }
+                },
+                getAssociatedUserPath(user) {
+                    const dfs = (node) => {
+                    if (!node) return '';
+                    const path = node.name;
+                    
+                    if (node.parent) {
+                        return dfs(node.parent) + ', ' + path;
+                    } else {
+                        return path;
+                    }
+                    };
+                    var fpath =  dfs(user.parent);
+                    if (fpath) {
+                        fpath = fpath.replace('undefined, ', '');
+                        return  fpath;
+                    } else {
+                        return '';
                     }
                 }
 
