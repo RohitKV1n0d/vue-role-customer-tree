@@ -14,6 +14,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.24.3/vuedraggable.umd.js" integrity="sha512-MPl1xjL9tTTJHmaWWTewqTJcNxl2pecJ0D0dAFHmeQo8of+F9uF7zb2bazCX7m45K3mKRg44L1xJDeFzjmjRtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         #app {
             padding: 15px;
@@ -167,6 +168,9 @@
             box-shadow: none;
             background-color: #fff;
         }
+        .nav-item{
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -187,7 +191,7 @@
                 <!-- Legends -->
 
 
-                <Tree :data="treeData" draggable="false" @change="handleChange" :ondragend="handleDragEnd" @update="handleTreeUpdate" :indent="20">
+                <Tree :data="treeData" draggable="false" @change="handleChange" :ondragend="handleDragEnd" @update="handleTreeUpdate" :indent="30" cross-tree="cross-tree">
                     <div slot-scope="{ data, store }" :class="{
                         'red-box': data.role > MAX_ROLE,
                         'tree-node-selected': selectedUser === data
@@ -200,17 +204,14 @@
                                     <b v-if="data.children && data.children.length" @click="store.toggleOpen(data)">
                                         <i :class="data.open ? OPEN_TRUE_ICON : OPEN_FALSE_ICON"></i>
                                     </b>
-                                    <template v-if="!data.isEditing">
+                                    <template >
                                         <span @dblclick="editUser(data)">
                                             [[ data.name ]]
                                             <i :class="getRoleIconClass(Object.keys(ROLE_HIERARCHY)[data.role])"
                                             :style="{ color: getRoleIconColor(Object.keys(ROLE_HIERARCHY)[data.role]) }"></i>
                                         </span>
                                     </template>
-                                    <template v-else>
-                                        <input type="text" v-model="data.name" @keyup.enter="saveEditedUser(data)"
-                                            @keyup.esc="cancelEdit(data)" @blur="saveEditedUser(data)" />
-                                    </template>
+                                    
                                 </div>
                                 <div class="action-side" v-show="data.showActions || data.isEditing">
                                     <template v-if="!data.isEditing">
@@ -235,6 +236,20 @@
                     <input type="checkbox" v-model="dragEnabled"> Toggle Drag
                 </label>
 
+                <h3>Unassigned Users </h3>
+                <input v-model="searchText" class="form-control" placeholder="Search users..." />
+                <Tree :data="filteredUnassignedUsersTree" :draggable="dragEnabled" @change="handleChange" :ondragend="handleDragEnd" @update="handleTreeUpdate" cross-tree="cross-tree">
+                    <div slot-scope="{ data, store }" class="tree-node-unassigned">
+                        <div class="user-box">
+                            <div class="name-data-side">
+                                <span>[[ data.name ]]</span>
+                            </div>
+                            <div class="action-side" v-show="data.showActions || data.isEditing">
+                                <!-- add if req -->
+                            </div>
+                        </div>
+                    </div>
+                </Tree>
             </div>
             <div class="col-8">
                 <div class="container details-tab" v-if="selectedUser">
@@ -252,7 +267,8 @@
                             >Products</a>
                         </li>
                     </ul>
-                    <div class="row" v-if="seletedtab === 1">
+                    <div class="row" v-if="seletedtab === 1"  @keyup.enter="saveEditedUser(selectedUser)"
+                    @keyup.esc="cancelEdit(selectedUser)" @blur="saveEditedUser(selectedUser)" >
                         <!-- User Information -->
                         <div class="col-md-12 user-card-info">
                             <div class="card">
@@ -492,12 +508,13 @@
 
 
         class TreeNode {
-            constructor(name, role, showActions = false, isEditing = false, enabled = true, username = "", firstName = "", lastName = "", email = "", password = "", phone = "", address = "", state = "", pan = "", region = "", associatedUser = "", groups = "", parent = null, children = []) {
+            constructor(name, role, fromExternal=false, showActions = false, isEditing = false, enabled = true, username = "", firstName = "", lastName = "", email = "", password = "", phone = "", address = "", state = "", pan = "", region = "", associatedUser = "", groups = "", parent = null, children = []) {
                 this.name = name;
                 this.role = role;
-                this.showActions = false;
-                this.isEditing = false;
-                this.enabled = true;
+                this.fromExternal = fromExternal;
+                this.showActions = showActions;
+                this.isEditing = isEditing;
+                this.enabled = enabled;
                 this.username = username;
                 this.firstName = firstName;
                 this.lastName = lastName;
@@ -566,10 +583,20 @@
             "region": "ceo region",
         };
 
-        
 
         const MAX_ROLE = Object.keys(ROLE_HIERARCHY).length - 1;
         const DraggableTree = window.vueDraggableNestedTree.DraggableTree;
+
+
+
+        SAMPLE_UNASSIGNED_USERS = [
+            new TreeNode("Unassigned User 1", ROLE_HIERARCHY.CEO, true, true, true, true, "unassigned1", "Unassigned", "User 1"),
+            new TreeNode("Unassigned User 2", ROLE_HIERARCHY.CEO, true, true, true, true, "unassigned2", "Unassigned", "User 2"),
+            new TreeNode("Unassigned User 3", ROLE_HIERARCHY.CEO, true, true, true, true, "unassigned3", "Unassigned", "User 3"),
+            
+ 
+        ];
+
 
         var app = new Vue({
             el: "#app",
@@ -579,6 +606,7 @@
                 treeData: [
                     new TreeNode("CEO1", ROLE_HIERARCHY.CEO, []),
                 ],
+                unassignedUsersTree: SAMPLE_UNASSIGNED_USERS,
                 newUser: "",
                 OPEN_TRUE_ICON: OPEN_TRUE_ICON,
                 OPEN_FALSE_ICON: OPEN_FALSE_ICON,
@@ -593,10 +621,16 @@
                 treeData: [],
                 toggleSelectUserEnable : false,
                 seletedtab: 1,
-                
+                searchText: "",
             },
             computed: {
-                // 
+                filteredUnassignedUsersTree() {
+                return this.unassignedUsersTree.filter((user) =>
+                    user.name.toLowerCase().includes(this.searchText.toLowerCase())
+                );
+                },
+          
+
             },
             watch: {
                 treeData(newValue){
@@ -609,6 +643,15 @@
                 },
             },
             methods: {
+                handleChangeUnassigned(newData, oldData) {
+                // This is called whenever the unassigned tree's data changes
+                console.log('The unassigned tree has changed');
+                },
+                
+                handleTreeUpdateUnassigned(tree) {
+                // This is called when the unassigned tree is updated
+                console.log('The unassigned tree has been updated');
+                },
                 handleTreeUpdate(updatedTreeData) {
                     this.treeData = updatedTreeData;
                 },
@@ -632,6 +675,17 @@
                             updateChildRoles(childNode, newRole + 1);
                         }
                     };
+                    // if from external then start to edit
+                    if (node.fromExternal) {
+                        // delete from unassignedUsersTreex
+                        const index = this.unassignedUsersTree.findIndex((child) => child === node);
+                        if (index !== -1) {
+                            this.unassignedUsersTree.splice(index, 1);
+                        }
+                        this.editUser(node);
+                        this.selectedUser = node;
+                        return;
+                    }
 
                     // Find the parent node of the current node
                     const parentNode = this.findParentNode(node, this.treeData[0]);
@@ -647,6 +701,12 @@
                     if (this.treeData.length > 1) {
                         return false;
                     }
+                    // if this.unassignedUsersTree has children then return false
+                    for (const childNode of this.unassignedUsersTree) {
+                        if (childNode.children.length > 0 && childNode.fromExternal) {
+                            return false;
+                        }
+                    }
                     return true;
 
                 },
@@ -660,6 +720,7 @@
                     if (user.name.trim() !== "") {
                         this.$set(user, "isEditing", false);
                     }
+                    user.fromExternal = false;
                 },
 
                 cancelEdit(user) {
@@ -689,7 +750,7 @@
                     }
                 },
                 addChild(user) {
-                    const newNode = new TreeNode("New "+Object.keys(ROLE_HIERARCHY)[user.role + 1]+" User", user.role + 1, true, true);
+                    const newNode = new TreeNode("New "+Object.keys(ROLE_HIERARCHY)[user.role + 1]+" User", user.role + 1, false, true, true);
                     user.children.push(newNode);
                     this.editUser(newNode);
                     this.selectedUser = newNode;
@@ -727,6 +788,7 @@
                     const dfs = (jsonNode) => {
                         const newNode = new TreeNode(jsonNode.username, 
                                                     jsonNode.role, 
+                                                    false,
                                                     true,
                                                     false,
                                                     jsonNode.enabled,
