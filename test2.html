@@ -15,19 +15,23 @@
         .grid-item {
         /* 2  items per row, 10px padding on each side */
             width: calc(50% - 20px);
-        padding: 100px;
-        margin-bottom: 20px; /* space between rows */
-        margin: 10px;
-        box-sizing: border-box; /* to include the padding in the item width */
-        background-color: #fff6b2;
+            /* rectangle padding */
+          padding: 50px 0px 50px 0px;
+          text-align: center;
+          border: 1px solid #ccc; 
+          border-radius: 10px;
+          margin-bottom: 20px; /* space between rows */
+          margin: 10px;
+          box-sizing: border-box; /* to include the padding in the item width */
+          background-color: #fff6b2;
         }
 
-        .grid-item.tinted {
+        .tinted {
         background-color: #f9c7c8;
         }
 
         .sortable-selected {
-        background-color: #f9c7c8 !important;
+        background-color: #c7f9d3 !important;
         border: solid red 1px !important;
         z-index: 1 !important;
         }
@@ -52,7 +56,7 @@
     <div class="col-md-6 grid-container">
       <h3>Draggable Grid 1</h3>
       <div id="grid1" class="grid">
-        <div class="grid-item" v-for="item in list1Data" :key="item.id" :data-id="item.id">
+        <div v-for="item in grid1Data" :key="`grid1-${item.id}`" class="grid-item" :data-id="item.id">
           [[ item.name ]]
         </div>
       </div>
@@ -60,7 +64,7 @@
     <div class="col-md-6 grid-container">
       <h3>Draggable Grid 2</h3>
       <div id="grid2" class="grid">
-        <div class="grid-item tinted" v-for="item in list2Data" :key="item.id" :data-id="item.id">
+        <div v-for="item in grid2Data" :key="`grid2-${item.id}`" class="grid-item tinted" :data-id="item.id">
           [[ item.name ]]
         </div>
       </div>
@@ -70,80 +74,72 @@
 
 
   <script>
-    var app = new Vue({
-        el: "#app",
-        delimiters: ["[[", "]]"],
-        data: {
-            list1Data : [
-                { id: 1, name: "Item 1" },
-                { id: 2, name: "Item 2" },
-                // More items here...
-            ],
-            list2Data : [
-                { id: 6, name: "Item 1" },
-                { id: 7, name: "Item 2" },
-                // More items here...
-            ],
-        },
-        methods: {
-            getSelectedItems(sortable) {
-                var selectedItems = [];
-                var selectedElms = sortable.el.querySelectorAll('.sortable-selected');
-                for (var i = 0; i < selectedElms.length; i++) {
-                    var itemId = Number(selectedElms[i].dataset.id);
-                    // combimeItemsList will contain all in list1Data and list2Data
-                    var combimeItemsList = this.list1Data.concat(this.list2Data);
-                    var item = combimeItemsList.find(function (item) {
-                        return item.id === itemId;
-                    });
-                    selectedItems.push(item);
+   var app = new Vue({
+    el: "#app",
+    delimiters: ["[[", "]]"],
+    data: {
+        grid1Data : [
+            { id: 1, name: "Item 11" },
+            { id: 2, name: "Item 12" },
+            { id: 3, name: "Item 13" },
+            { id: 4, name: "Item 14" },
+            { id: 5, name: "Item 15" },
+        ],
+        grid2Data : [
+            { id: 6, name: "Item 21" },
+            { id: 7, name: "Item 22" },
+            { id: 8, name: "Item 23" },
+            { id: 9, name: "Item 24" },
+            { id: 10, name: "Item 25" },
+        ],
+        allItems: [],
+    },
+    methods: {
+        updateLists: function() {
+            let grid1Data = [];
+            let grid2Data = [];
+            let allElems = document.querySelectorAll(".grid-item");
+            for (let i = 0; i < allElems.length; i++) {
+                let item = this.allItems.find(x => x.id == allElems[i].dataset.id);
+                if (allElems[i].parentNode.id === "grid1") {
+                    grid1Data.push(item);
+                } else {
+                    grid2Data.push(item);
                 }
-                return selectedItems;
-            },
-            
-        },
-        mounted() {
-            var vm = this;
-            const sortable1 = new Sortable(grid1, {
-                group: 'shared',
-                multiDrag: true,
-                animation: 150,
-                selectedClass: "sortable-selected",
-                draggable: ".grid-item",
-                onAdd: function (evt) {
-                    // add all selected items to the other list or if only single item then add that
-                    var selectedItems = vm.getSelectedItems(sortable1);
-                    // vm.moveItems(vm.list1Data, vm.list2Data, selectedItems);
-                    
-                   
-                },
-                onRemove: function (evt) {
-                   
-                },
-                onDrag: function (evt) {
-                    //    console.log(evt);
-                    console.log("onDragStart");
-                },
-            });
-
-            const sortable2 = new Sortable(grid2, {
-                group: 'shared',
-                multiDrag: true,
-                animation: 150,
-                selectedClass: "sortable-selected",
-                draggable: ".grid-item",
-                onAdd: function (evt) {
-                    
-                },
-                onRemove: function (evt) {
-                   
-                },
-            });
+            }
+            // Create deep copies of the arrays to force Vue to re-render the lists
+            this.grid1Data = JSON.parse(JSON.stringify(grid1Data));
+            this.grid2Data = JSON.parse(JSON.stringify(grid2Data));
         }
+    },
+    mounted() {
+        this.allItems = this.grid1Data.concat(this.grid2Data);
+        var vm = this;
+        const sortable1 = new Sortable(grid1, {
+            group: 'shared',
+            multiDrag: true,
+            animation: 150,
+            draggable: ".grid-item",
+            onEnd: function (evt) {
+                vm.updateLists();
+            }
+        });
 
-    });
+        const sortable2 = new Sortable(grid2, {
+            group: 'shared',
+            multiDrag: true,
+            animation: 150,
+            draggable: ".grid-item",
+            onEnd: function (evt) {
+                vm.updateLists();
+            }
+        });
+    }
+});
 
   </script>
+  
+  
 
 
 </body>
