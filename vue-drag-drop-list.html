@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue Draggable Example</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+  <script src="https://unpkg.com/vue-draggable-nested-tree@latest/dist/vue-draggable-nested-tree.js"></script>
+  <script src="https://unpkg.com/tree-helper@latest/dist/tree-helper.js"></script>
+  
+<script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.5.2/vue.min.js"></script>
+<!-- CDNJS :: Sortable (https://cdnjs.com/) -->
+<script src="//cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
+<!-- CDNJS :: Vue.Draggable (https://cdnjs.com/) -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.20.0/vuedraggable.umd.min.js"></script>
+
+  <!-- Other styles and scripts here -->
+</head>
+<body>
+<div id="app">
+
+
+  <h3>List 1</h3>
+  <draggable v-model="list1" group="items" :move="checkMove">
+    <div v-for="item in list1" :key="item.name">
+      {{ item.name }}
+    </div>
+  </draggable>
+
+  <h3>List 2</h3>
+  <draggable v-model="list2" group="items" :move="checkMove">
+    <div v-for="item in list2" :key="item.name">
+      {{ item.name }}
+    </div>
+  </draggable>
+
+
+
+</div>
+
+<script>
+  new Vue({
+    el: '#app',
+    data:{
+        list1: [
+          { name: 'CEO1' },
+          { name: 'CEO2' },
+          { name: 'CEO3' }
+        ],
+        list2: [
+          { name: 'Manager1' },
+          { name: 'Manager2' },
+          { name: 'Manager3' }
+        ]
+    },
+    components: {
+      draggable: window['vuedraggable']
+    },
+    methods: {
+      checkMove(e) {
+        return (e.draggedContext.element.name !== 'Cannot move');
+      }
+    }
+  });
+</script>
+</body>
+</html>

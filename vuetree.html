@@ -15,7 +15,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.24.3/vuedraggable.umd.js" integrity="sha512-MPl1xjL9tTTJHmaWWTewqTJcNxl2pecJ0D0dAFHmeQo8of+F9uF7zb2bazCX7m45K3mKRg44L1xJDeFzjmjRtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue-notification@1.3.20/dist/ssr.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <style>
@@ -174,6 +173,9 @@
         .nav-item{
             cursor: pointer;
         }
+        .unassigned-users{
+            margin-top: 20px;
+        }
     </style>
 </head>
 
@@ -183,6 +185,7 @@
         <div class="row">
             <div class="col-4">
                 <h3>User Hierarchy</h3>
+                <!-- ================= Legends Start ====================== -->
                 <!-- CEO:0, Manager:1, ASO:2, RSO:3, Sales:4 -->
                 <div class="legend-box">
                     <div v-for="(roleName, index) in Object.keys(ROLE_ICON_MAPPING)" :key="roleName">
@@ -191,9 +194,9 @@
                     </div>
                 </div>
                 
-                <!-- Legends -->
+                <!-- ================= Legends End ====================== -->
 
-
+                <!-- ================= Users Hierarchy Tree Start ======================  -->
                 <Tree :data="treeData" draggable="false" @change="handleChange" :ondragend="handleDragEnd" @update="handleTreeUpdate" :indent="30" cross-tree="cross-tree">
                     <div slot-scope="{ data, store }" :class="{
                         'red-box': data.role > MAX_ROLE,
@@ -218,8 +221,9 @@
                                 </div>
                                 <div class="action-side" v-show="data.showActions || data.isEditing">
                                     <template v-if="!data.isEditing">
-                                        <a v-if="data.role < 4" @click.stop="addChild(data)" class="add-user-btn"><i
-                                                class="far fa-square-plus"></i></a>
+                                        <a v-if="data.role < 4" @click.stop="addChild(data)"  data-bs-toggle="tooltip" 
+                                            data-bs-placement="right" class="add-user-btn" title="Add Child">
+                                            <i class="far fa-square-plus"></i></a>
                                         <a @click="editUser(data)" class="edit-user-btn"><i
                                                 class="fas fa-pen-to-square"></i></a>
                                         <a @click="deleteUser(data)" class="delete-user-btn"><i
@@ -234,28 +238,35 @@
                         </template>
                     </div>
                 </Tree>
-               
-            
-                <div class="col-md-12 unassigned-users" v-if="filteredUnassignedUsersTree.length > 0">
-                    <h3>Unassigned Users </h3>
-                    <input v-model="searchText" class="form-control" placeholder="Search users..." />
-                    <Tree :data="filteredUnassignedUsersTree" :draggable="dragEnabled" @change="handleChange" :ondragend="handleDragEnd" @update="handleTreeUpdate" cross-tree="cross-tree">
-                        <div slot-scope="{ data, store }" class="tree-node-unassigned">
-                            <div class="user-box">
-                                <div class="name-data-side">
-                                    <span>[[ data.name ]]</span>
-                                </div>
-                                <div class="action-side" v-show="data.showActions || data.isEditing">
-                                    <!-- add if req -->
+               <!-- ================= Users Hierarchy Tree ======================  -->
+
+
+                <!-- ================= Unassigned Users Start ====================== -->
+                <div class="col-md-12 unassigned-users" v-if="unassignedUsersTree.length > 0">
+                    <div class="container">
+                        <h4>Unassigned Users </h4>
+                        <input v-model="searchText" class="form-control" placeholder="Search users..." />
+                        <Tree :data="filteredUnassignedUsersTree" :draggable="dragEnabled" @change="handleChange" :ondragend="handleDragEnd" @update="handleTreeUpdate" cross-tree="cross-tree">
+                            <div slot-scope="{ data, store }" class="tree-node-unassigned">
+                                <div class="user-box">
+                                    <div class="name-data-side">
+                                        <span>[[ data.name ]]</span>
+                                    </div>
+                                    <div class="action-side" v-show="data.showActions || data.isEditing">
+                                        <!-- add if req -->
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </Tree>
+                        </Tree>
+                    </div>
                 </div>
+                <!-- ================= Unassigned Users End ====================== -->
+
                 <label class="options drag-box">
                     <input type="checkbox" v-model="dragEnabled"> Toggle Drag
                 </label>
             </div>
+            <!-- ================= Tabs Start ====================== -->
             <div class="col-8">
                 <div class="container details-tab" v-if="selectedUser">
                     <ul class="nav nav-tabs">
@@ -491,11 +502,13 @@
 
                 </div>
             </div>
+            <!-- ================= Tabs End ====================== -->
         </div>
     </div>
 
 
     <script>
+       
         // from Config
         const CLOSE_OPEN_ICON_MAPPING = {
             CLOSE: "fas fa-caret-right",
@@ -704,6 +717,7 @@
                 filteredUnassignedUsersTree() {
                 return this.unassignedUsersTree.filter((user) =>
                     user.name.toLowerCase().includes(this.searchText.toLowerCase())
+                    
                 );
                 },
             },
@@ -976,8 +990,11 @@
                 close: true,
                 gravity: "top",
                 position: "right",
-                backgroundColor: type === "success" ? "#4caf50" : "#f44336",
+                backgroundColor: type === "success" ? "#1cbe2285" : "#f44336c2",
                 stopOnFocus: true,
+                style: {
+                    borderRadius: "5px",
+                },
             }).showToast();
         }
 
