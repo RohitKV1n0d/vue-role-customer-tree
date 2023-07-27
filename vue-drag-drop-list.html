@@ -1,69 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vue Draggable Example</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
-  <script src="https://unpkg.com/vue-draggable-nested-tree@latest/dist/vue-draggable-nested-tree.js"></script>
-  <script src="https://unpkg.com/tree-helper@latest/dist/tree-helper.js"></script>
-  
-<script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.5.2/vue.min.js"></script>
-<!-- CDNJS :: Sortable (https://cdnjs.com/) -->
-<script src="//cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
-<!-- CDNJS :: Vue.Draggable (https://cdnjs.com/) -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.20.0/vuedraggable.umd.min.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Vue Draggable List</title>
 
-  <!-- Other styles and scripts here -->
+  <!-- jsDelivr :: Sortable :: Latest (https://www.jsdelivr.com/package/npm/sortablejs) -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+  
+  <!-- Latest Sortable -->
+  <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
+
+  
+  <style>
+    .tinted {
+      background-color: #fff6b2 !important;
+    }
+
+    .selected {
+      background-color: #f9c7c8 !important;
+      border: solid red 1px !important;
+      z-index: 1 !important;
+    }
+  </style>
 </head>
 <body>
-<div id="app">
-
-
-  <h3>List 1</h3>
-  <draggable v-model="list1" group="items" :move="checkMove">
-    <div v-for="item in list1" :key="item.name">
-      {{ item.name }}
+  <div id="app">
+    <div class="container">
+      <div class="col-md-6">
+        <h3>Draggable List 1</h3>
+        <div id="list1" class="list-group">
+          <div class="list-group-item">Item 1</div>
+          <div class="list-group-item">Item 2</div>
+          <div class="list-group-item">Item 3</div>
+          <div class="list-group-item">Item 4</div>
+          <div class="list-group-item">Item 5</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h3>Draggable List 2</h3>
+        <div id="list2" class="list-group">
+          <div class="list-group-item tinted">Item 1</div>
+          <div class="list-group-item tinted">Item 2</div>
+          <div class="list-group-item tinted">Item 3</div>
+          <div class="list-group-item tinted">Item 4</div>
+          <div class="list-group-item tinted">Item 5</div>
+        </div>
+      </div>
     </div>
-  </draggable>
+  </div>
 
-  <h3>List 2</h3>
-  <draggable v-model="list2" group="items" :move="checkMove">
-    <div v-for="item in list2" :key="item.name">
-      {{ item.name }}
-    </div>
-  </draggable>
-
-
-
-</div>
-
-<script>
-  new Vue({
-    el: '#app',
-    data:{
+  <script>
+    new Vue({
+      el: "#app",
+      data: {
         list1: [
-          { name: 'CEO1' },
-          { name: 'CEO2' },
-          { name: 'CEO3' }
+          { id: 1, name: "Item 1" },
+          { id: 2, name: "Item 2" },
+          { id: 3, name: "Item 3" },
+          { id: 4, name: "Item 4" },
+          { id: 5, name: "Item 5" },
         ],
         list2: [
-          { name: 'Manager1' },
-          { name: 'Manager2' },
-          { name: 'Manager3' }
-        ]
-    },
-    components: {
-      draggable: window['vuedraggable']
-    },
-    methods: {
-      checkMove(e) {
-        return (e.draggedContext.element.name !== 'Cannot move');
-      }
-    }
-  });
-</script>
+          { id: 6, name: "Item 1" },
+          { id: 7, name: "Item 2" },
+          { id: 8, name: "Item 3" },
+          { id: 9, name: "Item 4" },
+          { id: 10, name: "Item 5" },
+        ],
+      },
+      updated() {
+        Sortable.create(list1, {
+          group: 'shared',
+          multiDrag: true,
+          selectedClass: "selected",
+          animation: 150
+        });
+
+        Sortable.create(list2, {
+          group: 'shared',
+          multiDrag: true,
+          selectedClass: "selected",
+          animation: 150
+        });
+
+        
+       
+      },
+    });
+  </script>
 </body>
 </html>
