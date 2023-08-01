@@ -3,66 +3,79 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>Vue Draggable List</title>
+  <title>JS Bin</title>
+  <style>
+   .grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -10px; /* to counteract the padding on the grid items */
+}
 
-  <!-- jsDelivr :: Sortable :: Latest (https://www.jsdelivr.com/package/npm/sortablejs) -->
+.grid-item {
+  /* 2 items per row, 10px padding on each side */
+  width: calc(50% - 20px);
+  padding: 100px;
+  margin-bottom: 20px; /* space between rows */
+  margin: 10px;
+  box-sizing: border-box; /* to include the padding in the item width */
+  background-color: #fff6b2;
+  cursor: grab; /* Add grab cursor to show items are draggable */
+}
+
+.grid-item.tinted {
+  background-color: #f9c7c8;
+}
+
+.grid-item.selected {
+  background-color: #f9c7c8 !important;
+  border: solid red 1px !important;
+  z-index: 1 !important;
+  cursor: grabbing; /* Change cursor when dragging the selected item */
+}
+
+  </style>
+</head>
+<body>
+  <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
   
   <!-- Latest Sortable -->
   <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
 
-  
-  <style>
-    .tinted {
-      background-color: #fff6b2 !important;
-    }
-
-    .selected {
-      background-color: #f9c7c8 !important;
-      border: solid red 1px !important;
-      z-index: 1 !important;
-    }
-  </style>
-</head>
-<body>
-  <div id="app">
-    <div class="container">
-      <div class="col-md-6">
-        <h3>Draggable List 1</h3>
-        <div id="list1" class="list-group">
-          <div class="list-group-item">Item 1</div>
-          <div class="list-group-item">Item 2</div>
-          <div class="list-group-item">Item 3</div>
-          <div class="list-group-item">Item 4</div>
-          <div class="list-group-item">Item 5</div>
+  <div class="container" id="app">
+    <div class="col-md-6">
+      <h3>Draggable Grid 1</h3>
+      <div id="grid1" class="grid">
+        <div class="grid-item" v-for="item in list1Data" :key="item.id" :data-id="item.id">
+          [[ item.name ]]
         </div>
       </div>
-      <div class="col-md-6">
-        <h3>Draggable List 2</h3>
-        <div id="list2" class="list-group">
-          <div class="list-group-item tinted">Item 1</div>
-          <div class="list-group-item tinted">Item 2</div>
-          <div class="list-group-item tinted">Item 3</div>
-          <div class="list-group-item tinted">Item 4</div>
-          <div class="list-group-item tinted">Item 5</div>
+    </div>
+    <div class="col-md-6">
+      <h3>Draggable Grid 2</h3>
+      <div id="grid2" class="grid">
+        <div class="grid-item tinted" v-for="item in list2Data" :key="item.id" :data-id="item.id">
+          [[ item.name ]]
         </div>
       </div>
     </div>
   </div>
+  
 
   <script>
-    new Vue({
+    var app = new Vue({
       el: "#app",
+      delimiters: ["[[", "]]"],
       data: {
-        list1: [
+        list1Data: [
           { id: 1, name: "Item 1" },
           { id: 2, name: "Item 2" },
           { id: 3, name: "Item 3" },
           { id: 4, name: "Item 4" },
           { id: 5, name: "Item 5" },
         ],
-        list2: [
+        list2Data: [
           { id: 6, name: "Item 1" },
           { id: 7, name: "Item 2" },
           { id: 8, name: "Item 3" },
@@ -70,23 +83,25 @@
           { id: 10, name: "Item 5" },
         ],
       },
-      updated() {
-        Sortable.create(list1, {
-          group: 'shared',
-          multiDrag: true,
-          selectedClass: "selected",
-          animation: 150
-        });
+      mounted() {
+        this.$nextTick(function() {
+          var vm = this;
 
-        Sortable.create(list2, {
-          group: 'shared',
-          multiDrag: true,
-          selectedClass: "selected",
-          animation: 150
-        });
+          // Initialize Sortable for each grid
+          new Sortable(grid1, {
+            group: 'shared',
+            multiDrag: true,
+            animation: 150,
+            selectedClass: "selected", // Set the class for selected items
+          });
 
-        
-       
+          new Sortable(grid2, {
+            group: 'shared',
+            multiDrag: true,
+            animation: 150,
+            selectedClass: "selected", // Set the class for selected items
+          });
+        });
       },
     });
   </script>

@@ -1,62 +1,95 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>JS Bin</title>
   <style>
-        .grid {
-        display: flex;
-        flex-wrap: wrap;
-        margin-left: -10px; /* to counteract the padding on the grid items */
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      margin-left: -10px;
+      /* to counteract the padding on the grid items */
 
-        }
+    }
 
-        .grid-item {
-        /* 2  items per row, 10px padding on each side */
-            width: calc(50% - 20px);
-            /* rectangle padding */
-          padding: 50px 0px 50px 0px;
-          text-align: center;
-          border: 1px solid #ccc; 
-          border-radius: 10px;
-          margin-bottom: 20px; /* space between rows */
-          margin: 10px;
-          box-sizing: border-box; /* to include the padding in the item width */
-          background-color: #fff6b2;
-        }
+    .grid-item {
+      /* 3  items per row, 10px padding on each side */
+      width: calc(50% - 20px);
+      /* rectangle padding */
+      padding: 50px 0px 50px 0px;
+      text-align: center;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      /* space between rows */
+      margin: 10px;
+      box-sizing: border-box;
+      /* to include the padding in the item width */
+      background-color: #fff6b2;
+    }
 
-        .tinted {
-        background-color: #f9c7c8;
-        }
+    .tinted {
+      background-color: #f9c7c8;
+    }
 
-        .sortable-selected {
-        background-color: #c7f9d3 !important;
-        border: solid red 1px !important;
-        z-index: 1 !important;
-        }
-        .grid-container{
-            border: 1px solid black;
-            padding: 10px;
-        }
+    .sortable-selected {
+      background-color: #c7f9d3 !important;
+      border: solid red 1px !important;
+      z-index: 1 !important;
+    }
+
+    .grid-container {
+      border: 1px solid black;
+      padding: 10px;
+    }
+    .filtered{
+      background-color: #f9c7c8;
+    }
   </style>
-</head>
-<body>
+
   <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
-  
+
   <!-- Latest Sortable -->
   <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
   <!-- Sortable Grid -->
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+</head>
 
+<body>
+  <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
   <div class="container" id="app">
     <div class="col-md-6 grid-container">
       <h3>Draggable Grid 1</h3>
       <div id="grid1" class="grid">
-        <div v-for="item in grid1Data" :key="`grid1-${item.id}`" class="grid-item" :data-id="item.id">
+        <div v-for="item in grid1Items" :key="item.id" class="grid-item" :id="'item-' + item.id">
           [[ item.name ]]
         </div>
       </div>
@@ -64,83 +97,180 @@
     <div class="col-md-6 grid-container">
       <h3>Draggable Grid 2</h3>
       <div id="grid2" class="grid">
-        <div v-for="item in grid2Data" :key="`grid2-${item.id}`" class="grid-item tinted" :data-id="item.id">
+        <!-- if checkbox is selected then there shoudl be class sortable-selected -->
+        <div v-for="item in grid2Items" :key="item.id" class="grid-item tinted" :id="'item-' + item.id" :class="{ 'sortable-selected': item.selected }" @click="item.selected = !item.selected">
+          <input type="checkbox" v-model="item.selected" />
           [[ item.name ]]
+          <button @click="deleteItem(item.id)">Delete</button>
         </div>
+        <!-- delete btn -->
       </div>
     </div>
+    <!-- button to update -->
+    <button @click="syncData" v-if="!isDataSynced">Update</button>
   </div>
-  
-
 
   <script>
-   var app = new Vue({
-    el: "#app",
-    delimiters: ["[[", "]]"],
-    data: {
-        grid1Data : [
-            { id: 1, name: "Item 11" },
-            { id: 2, name: "Item 12" },
-            { id: 3, name: "Item 13" },
-            { id: 4, name: "Item 14" },
-            { id: 5, name: "Item 15" },
+    class GridData {
+      constructor(id, name, selected = false) {
+        this.id = id;
+        this.name = name;
+        this.selected = selected;
+      }
+    }
+
+
+
+    var app = new Vue({
+      el: "#app",
+      delimiters: ["[[", "]]"],
+      data: {
+        grid1Items: [
+          new GridData(1, "1 Item 11"),
+          new GridData(2, "1 Item 12"),
         ],
-        grid2Data : [
-            { id: 6, name: "Item 21" },
-            { id: 7, name: "Item 22" },
-            { id: 8, name: "Item 23" },
-            { id: 9, name: "Item 24" },
-            { id: 10, name: "Item 25" },
+        grid2Items: [
+          new GridData(6, "2 Item 21"),
+          new GridData(7, "2 Item 22"),
+          new GridData(8, "2 Item 23"),
+          new GridData(9, "2 Item 24"),
+          new GridData(10, "2 Item 25"),
         ],
-        allItems: [],
-    },
-    methods: {
-        updateLists: function() {
-            let grid1Data = [];
-            let grid2Data = [];
-            let allElems = document.querySelectorAll(".grid-item");
-            for (let i = 0; i < allElems.length; i++) {
-                let item = this.allItems.find(x => x.id == allElems[i].dataset.id);
-                if (allElems[i].parentNode.id === "grid1") {
-                    grid1Data.push(item);
-                } else {
-                    grid2Data.push(item);
-                }
-            }
-            // Create deep copies of the arrays to force Vue to re-render the lists
-            this.grid1Data = JSON.parse(JSON.stringify(grid1Data));
-            this.grid2Data = JSON.parse(JSON.stringify(grid2Data));
-        }
-    },
-    mounted() {
-        this.allItems = this.grid1Data.concat(this.grid2Data);
+        grid1Data: [],
+        grid2Data: [],
+        isDataSynced: true,
+        selectedItems: [],
+      },
+      updated() {
         var vm = this;
-        const sortable1 = new Sortable(grid1, {
-            group: 'shared',
-            multiDrag: true,
-            animation: 150,
-            draggable: ".grid-item",
-            onEnd: function (evt) {
-                vm.updateLists();
-            }
+        vm.grid1Data = [];
+        vm.grid2Data = [];
+
+        // Go through each item in Grid1 and add the data for that item to grid1Data
+        Array.from(grid1.children).forEach(item => {
+          let id = parseInt(item.id.replace('item-', ''));
+          let dataItem = vm.grid1Items.find(i => i.id === id) || vm.grid2Items.find(i => i.id === id);
+          if (dataItem) vm.grid1Data.push(dataItem);
         });
 
-        const sortable2 = new Sortable(grid2, {
-            group: 'shared',
+        // Repeat the same process for Grid2 and grid2Data
+        Array.from(grid2.children).forEach(item => {
+          let id = parseInt(item.id.replace('item-', ''));
+          let dataItem = vm.grid1Items.find(i => i.id === id) || vm.grid2Items.find(i => i.id === id);
+          if (dataItem) vm.grid2Data.push(dataItem);
+        });
+      },
+      mounted() {
+        var vm = this; // reference to the Vue instance for use in event handlers
+        vm.grid1Data = JSON.parse(JSON.stringify(vm.grid1Items));
+        vm.grid2Data = JSON.parse(JSON.stringify(vm.grid2Items));
+        this.initSortable();
+      },
+
+      methods: {
+        initSortable() {
+          var vm = this; // reference to the Vue instance for use in event handlers
+          vm.grid1Data = JSON.parse(JSON.stringify(vm.grid1Items));
+          vm.grid2Data = JSON.parse(JSON.stringify(vm.grid2Items));
+          grid1 = document.getElementById('grid1');
+          grid2 = document.getElementById('grid2');
+          const sortable1 = new Sortable(grid1, {
+            group: {
+                name: "shared",
+                multiple: true,
+                pull: 'clone',
+                put: false,
+            },
+            filter: '.filtered',
             multiDrag: true,
             animation: 150,
             draggable: ".grid-item",
+            sort: true,
             onEnd: function (evt) {
-                vm.updateLists();
+              vm.updateData();
+            },
+          });
+
+          const sortable2 = new Sortable(grid2, {
+            group: {
+                name: "shared",
+                multiple: true,
+                pull: true,
+                put: true,
+            },
+            multiDrag: true,
+            animation: 150,
+            draggable: ".grid-item",
+            sort: true,
+            onEnd: function (evt) {
+              vm.updateData();
+            },
+          });
+        },
+        updateData() {
+            this.isDataSynced = false;
+
+            // add class .tinted to all items in grid2
+            Array.from(grid2.children).forEach(item => {
+              item.classList.add('tinted');
+            });
+
+            // add checkbox and delete button in grid-item of grid2
+            Array.from(grid2.children).forEach(item => {
+              let id = parseInt(item.id.replace('item-', ''));
+              let dataItem = this.grid1Items.find(i => i.id === id) || this.grid2Items.find(i => i.id === id);
+              if (dataItem) {
+                item.innerHTML = `<input type="checkbox" v-model="item.selected" /> ${dataItem.name} <button onclick="app.deleteItem(${dataItem.id})">Delete</button>`;
+              }
+            });
+            
+
+            if (this.CheckDataSynced()) {
+              console.log("data is synced");
+              this.isDataSynced = true;
             }
-        });
-    }
-});
+        },
+
+        syncData() {
+            // var = grid1data = JSON.parse(JSON.stringify(this.grid1Data));
+            this.grid2Items= JSON.parse(JSON.stringify(this.grid2Data));
+            // update to db
+            this.isDataSynced = true;
+
+        },
+        CheckDataSynced() {
+          let grid1DataSynced = this.grid1Data.every(item => this.grid1Items.includes(item));
+          let grid1ItemsSynced = this.grid1Items.every(item => this.grid1Data.includes(item));
+          let grid2DataSynced = this.grid2Data.every(item => this.grid2Items.includes(item));
+          let grid2ItemsSynced = this.grid2Items.every(item => this.grid2Data.includes(item));
+          return grid1DataSynced && grid1ItemsSynced && grid2DataSynced && grid2ItemsSynced;
+        },
+        deleteItem(id) {
+          let item = this.grid2Data.find(i => i.id === id);
+          if (item) {
+            // remove the item from the grid2Items array and add it to the grid1Items array
+            this.grid2Items = this.grid2Items.filter(i => i.id !== id);
+            this.grid2Data = this.grid2Data.filter(i => i.id !== id);
+            // refresh the DOM 
+            this.updateData();
+          }
+        },
+      },
+    });
+
+
+
+    window.addEventListener('beforeunload', function (event) {
+      if (!app.isDataSynced) { // alert that there is unsaved data
+        event.returnValue = `You have unsaved data. Are you sure you want to leave?`;
+      }
+    });
 
   </script>
-  
-  
-
 
 </body>
+
+
+
+
 </html>
