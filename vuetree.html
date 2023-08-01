@@ -6,10 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Hierarchy</title>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
     <script src="https://unpkg.com/vue-draggable-nested-tree@latest/dist/vue-draggable-nested-tree.js"></script>
     <script src="https://unpkg.com/tree-helper@latest/dist/tree-helper.js"></script>
@@ -17,15 +24,19 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.24.3/vuedraggable.umd.js" integrity="sha512-MPl1xjL9tTTJHmaWWTewqTJcNxl2pecJ0D0dAFHmeQo8of+F9uF7zb2bazCX7m45K3mKRg44L1xJDeFzjmjRtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.24.3/vuedraggable.umd.js"
+        integrity="sha512-MPl1xjL9tTTJHmaWWTewqTJcNxl2pecJ0D0dAFHmeQo8of+F9uF7zb2bazCX7m45K3mKRg44L1xJDeFzjmjRtA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
-      <!-- Latest Sortable -->
+    <!-- Latest Sortable -->
     <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
     <!-- Sortable Grid -->
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <style>
         #app {
@@ -46,13 +57,14 @@
             max-width: fit-content;
             min-width: 200px;
         }
-        .details-tab{
+
+        .details-tab {
             padding: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
 
-        
+
 
         /* on hover  */
         .tree-node-inner:hover {
@@ -140,196 +152,219 @@
             background-color: #f1f1f1;
             font-size: 12px;
         }
+
         .legend-box {
             display: flex;
         }
 
-        .legend-box > div {
+        .legend-box>div {
             display: flex;
             align-items: center;
             margin-right: 10px;
         }
+
         .form-label {
             font-size: 16px;
             margin: 0px;
         }
-        .user-card-info{
+
+        .user-card-info {
             margin-top: 20px;
         }
+
         .tree-node-selected {
             font-size: 16px;
             font-weight: bold;
         }
-        .save-btn{
+
+        .save-btn {
             margin-top: 20px;
             /* center */
             margin-left: auto;
         }
-        .float-right{
+
+        .float-right {
             float: right;
         }
-        .float-left{
+
+        .float-left {
             float: left;
         }
-        .user-tab-action-btn{
+
+        .user-tab-action-btn {
             margin-top: 20px;
             display: flex;
             align-items: center;
         }
-        .card .card-header{
+
+        .card .card-header {
             box-shadow: none;
             background-color: #fff;
         }
-        .nav-item{
+
+        .nav-item {
             cursor: pointer;
         }
-        .unassigned-users{
+
+        .unassigned-users {
             margin-top: 20px;
         }
-        .sortable-duplicate{
+
+        .sortable-duplicate {
             background-color: #ff0000;
         }
 
 
 
         .grid {
-      display: flex;
-      flex-wrap: wrap;
-      margin-left: -10px;
-      /* to counteract the padding on the grid items */
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: -10px;
+            /* to counteract the padding on the grid items */
 
-    }
-
-    .grid-item {
-      /* 3  items per row, 10px padding on each side */
-      width: calc(50% - 20px);
-      /* rectangle padding */
-      padding: 25px 0px 25px 0px;
-      text-align: center;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      /* space between rows */
-      margin: 10px;
-      box-sizing: border-box;
-      /* to include the padding in the item width */
-      background-color: #ffffff;
-      /* dropshadow */
-        box-shadow: 0px 0px 15px 0px #0000002c;
-    }
-    .add-customer-item{
-        width: calc(50% - 20px);
-      /* rectangle padding */
-      padding: 25px 0px 25px 0px;
-      text-align: center;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      /* space between rows */
-      margin: 10px;
-      box-sizing: border-box;
-      /* to include the padding in the item width */
-      background-color: #ffffff45;
-      border: 1px dashed #0000002c;
-      /* cursor click */
-        cursor: pointer;
-    }
-
-    .tinted {
-      background-color: #f9c7c8;
-    }
-
-    .sortable-selected {
-    background-color: #00000011 !important;
-    /* borken line border */
-    border: .5px dashed #0000002c !important;
-    /* font transform bold */
-    font-weight: bold !important;
-    /* font color white */
-    /* color: #ffffff !important; */
-    z-index: 1 !important;
-    animation: shake 0.5s linear infinite;
-    }
-
-    @keyframes shake {
-        0% {
-            transform: translateX(0);
         }
-        25% {
-            transform: translateX(-.5px) rotate(-.5deg);
+
+        .grid-item {
+            /* 3  items per row, 10px padding on each side */
+            width: calc(50% - 20px);
+            /* rectangle padding */
+            padding: 25px 0px 25px 0px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            /* space between rows */
+            margin: 10px;
+            box-sizing: border-box;
+            /* to include the padding in the item width */
+            background-color: #ffffff;
+            /* dropshadow */
+            box-shadow: 0px 0px 15px 0px #0000002c;
         }
-        50% {
-            transform: translateX(.5px) rotate(.5deg);
+
+        .add-customer-item {
+            width: calc(50% - 20px);
+            /* rectangle padding */
+            padding: 25px 0px 25px 0px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            /* space between rows */
+            margin: 10px;
+            box-sizing: border-box;
+            /* to include the padding in the item width */
+            background-color: #ffffff45;
+            border: 1px dashed #0000002c;
+            /* cursor click */
+            cursor: pointer;
         }
-        75% {
-            transform: translateX(-.5px) rotate(-.5deg);
+
+        .tinted {
+            background-color: #f9c7c8;
         }
-        100% {
-            transform: translateX(0);
+
+        .sortable-selected {
+            background-color: #00000011 !important;
+            /* borken line border */
+            border: .5px dashed #0000002c !important;
+            /* font transform bold */
+            font-weight: bold !important;
+            /* font color white */
+            /* color: #ffffff !important; */
+            z-index: 1 !important;
+            animation: shake 0.5s linear infinite;
         }
-    }
 
-    .grid-container {
-      border: 1px solid black;
-      padding: 10px;
-    }
-    .filtered{
-      background-color: #f9c7c8;
-    }
-    .grid-col-box{
-        margin: 5px;
-        padding: 10px;
-        border: 1px solid #D9D9D9;
-        border-radius: 5px;
-        background-color: #EBEBEB;
-    }
-    .delete-customer-btn {
-  position: relative;
-}
+        @keyframes shake {
+            0% {
+                transform: translateX(0);
+            }
 
-.delete-user-btn {
-  display: none;
-  position: absolute;
-  top: -35px;
-  right: -7px;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background-color: #ff000054; /* Red background for the circle */
-  color: #ffffff; /* White color for the trash icon */
-  text-align: center;
-  line-height: 28px;
-}
-/* Show the delete button on hover */
-.grid-item:hover .delete-user-btn {
-    display: block;
-}
+            25% {
+                transform: translateX(-.5px) rotate(-.5deg);
+            }
 
-.grid-header {
-    /* everything should be inline */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
+            50% {
+                transform: translateX(.5px) rotate(.5deg);
+            }
 
-}
-.customer-bulk-delete-btn{
-    background-color: #ff000054;
-    border: none;
-    color: #ffffff;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 12px;
-}
-.hide-obj{
-    display: none !important;
-}
+            75% {
+                transform: translateX(-.5px) rotate(-.5deg);
+            }
 
+            100% {
+                transform: translateX(0);
+            }
+        }
 
+        .grid-container {
+            border: 1px solid black;
+            padding: 10px;
+        }
+
+        .filtered {
+            background-color: #f9c7c8;
+        }
+
+        .grid-col-box {
+            margin: 5px;
+            padding: 10px;
+            border: 1px solid #D9D9D9;
+            border-radius: 5px;
+            background-color: #EBEBEB;
+        }
+
+        .delete-customer-btn {
+            position: relative;
+        }
+
+        .delete-user-btn {
+            display: none;
+            position: absolute;
+            top: -35px;
+            right: -7px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background-color: #ff000054;
+            /* Red background for the circle */
+            color: #ffffff;
+            /* White color for the trash icon */
+            text-align: center;
+            line-height: 28px;
+        }
+
+        /* Show the delete button on hover */
+        .grid-item:hover .delete-user-btn {
+            display: block;
+        }
+
+        .grid-header {
+            /* everything should be inline */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+
+        }
+
+        .customer-bulk-delete-btn {
+            background-color: #ff000054;
+            border: none;
+            color: #ffffff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+
+        .hide-obj {
+            display: none !important;
+        }
     </style>
 </head>
 
 <body>
     <div id="app">
-        
+
         <div class="row">
             <!-- ================= Users Hierarchy Start ======================  -->
             <div class="col-4">
@@ -338,39 +373,42 @@
                 <!-- CEO:0, Manager:1, ASO:2, RSO:3, Sales:4 -->
                 <div class="legend-box">
                     <div v-for="(roleName, index) in Object.keys(ROLE_ICON_MAPPING)" :key="roleName">
-                        <i :class="ROLE_ICON_MAPPING[roleName].icon" :style="{ color: ROLE_ICON_MAPPING[roleName].color }"></i>
-                        [[ roleName ]] <span v-if="index !== Object.keys(ROLE_ICON_MAPPING).length - 1">‏‏‎ ‎‏‏‎ ‎|</span>
+                        <i :class="ROLE_ICON_MAPPING[roleName].icon"
+                            :style="{ color: ROLE_ICON_MAPPING[roleName].color }"></i>
+                        [[ roleName ]] <span v-if="index !== Object.keys(ROLE_ICON_MAPPING).length - 1">‏‏‎ ‎‏‏‎
+                            ‎|</span>
                     </div>
                 </div>
-                
+
                 <!-- ================= Legends End ====================== -->
 
                 <!-- ================= Users Hierarchy Tree Start ======================  -->
-                <Tree :data="treeData" draggable="false" @change="handleChange" :ondragend="handleDragEnd" @update="handleTreeUpdate" :indent="30" cross-tree="cross-tree">
+                <Tree :data="treeData" draggable="false" @change="handleChange" :ondragend="handleDragEnd"
+                    @update="handleTreeUpdate" :indent="30" cross-tree="cross-tree">
                     <div slot-scope="{ data, store }" :class="{
                         'red-box': data.role > MAX_ROLE,
                         'tree-node-selected': selectedUser === data
                     }">
                         <template v-if="!data.isDragPlaceHolder">
-                            <div class="user-box" @mouseenter="data.showActions = true" @mouseleave="data.showActions = false"
-                                @click="toggleUserDetails(data)"
+                            <div class="user-box" @mouseenter="data.showActions = true"
+                                @mouseleave="data.showActions = false" @click="toggleUserDetails(data)"
                                 style="display: flex; align-items: center; justify-content: space-between;">
                                 <div class="name-data-side">
                                     <b v-if="data.children && data.children.length" @click="store.toggleOpen(data)">
                                         <i :class="data.open ? OPEN_TRUE_ICON : OPEN_FALSE_ICON"></i>
                                     </b>
-                                    <template >
+                                    <template>
                                         <span @dblclick="editUser(data)">
                                             [[ data.name ]]
                                             <i :class="getRoleIconClass(Object.keys(ROLE_HIERARCHY)[data.role])"
-                                            :style="{ color: getRoleIconColor(Object.keys(ROLE_HIERARCHY)[data.role]) }"></i>
+                                                :style="{ color: getRoleIconColor(Object.keys(ROLE_HIERARCHY)[data.role]) }"></i>
                                         </span>
                                     </template>
-                                    
+
                                 </div>
                                 <div class="action-side" v-show="data.showActions || data.isEditing">
                                     <template v-if="!data.isEditing">
-                                        <a v-if="data.role < 4" @click.stop="addChild(data)"  data-bs-toggle="tooltip" 
+                                        <a v-if="data.role < 4" @click.stop="addChild(data)" data-bs-toggle="tooltip"
                                             data-bs-placement="right" class="add-user-btn" title="Add Child">
                                             <i class="far fa-square-plus"></i></a>
                                         <a @click="editUser(data)" class="edit-user-btn"><i
@@ -387,7 +425,7 @@
                         </template>
                     </div>
                 </Tree>
-               <!-- ================= Users Hierarchy Tree ======================  -->
+                <!-- ================= Users Hierarchy Tree ======================  -->
 
 
                 <!-- ================= Unassigned Users Start ====================== -->
@@ -395,7 +433,8 @@
                     <div class="container">
                         <h4>Unassigned Users </h4>
                         <input v-model="searchText" class="form-control" placeholder="Search users..." />
-                        <Tree :data="filteredUnassignedUsersTree" :draggable="dragEnabled" @change="handleChange" :ondragend="handleDragEnd" @update="handleTreeUpdate" cross-tree="cross-tree">
+                        <Tree :data="filteredUnassignedUsersTree" :draggable="dragEnabled" @change="handleChange"
+                            :ondragend="handleDragEnd" @update="handleTreeUpdate" cross-tree="cross-tree">
                             <div slot-scope="{ data, store }" class="tree-node-unassigned">
                                 <div class="user-box">
                                     <div class="name-data-side">
@@ -417,53 +456,60 @@
             </div>
             <!-- ================= Users Hierarchy END ======================  -->
 
-            
+
             <!-- ================= Tabs Start ====================== -->
             <div class="col-8 tab-container">
                 <div class="container details-tab" v-if="selectedUser">
-                     <!-- ================= Tabs Headers START ====================== -->
+                    <!-- ================= Tabs Headers START ====================== -->
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
                             <a :class="selectedTab === 1 ? 'nav-link active' : 'nav-link'" @click="selectedTab = 1"
-                            aria-current="page" >User Info</a>
+                                aria-current="page">User Info</a>
                         </li>
                         <li class="nav-item">
-                            <a :class="selectedTab === 2 ? 'nav-link active' : 'nav-link'" @click="selectedTab = 2" 
-                            >Associated Customers</a>
+                            <a :class="selectedTab === 2 ? 'nav-link active' : 'nav-link'"
+                                @click="selectedTab = 2">Associated Customers</a>
                         </li>
                         <li class="nav-item">
-                            <a :class="selectedTab === 3 ? 'nav-link active' : 'nav-link'" @click="selectedTab = 3"
-                            >Products</a>
+                            <a :class="selectedTab === 3 ? 'nav-link active' : 'nav-link'"
+                                @click="selectedTab = 3">Products</a>
                         </li>
                     </ul>
-                     <!-- ================= Tabs Headers END ====================== -->
+                    <!-- ================= Tabs Headers END ====================== -->
 
                     <!-- ================= User Tab START ====================== -->
-                    <div class="row" v-if="selectedTab === 1"  @keyup.enter="saveEditedUser(selectedUser)"
-                    @keyup.esc="cancelEdit(selectedUser)" @blur="saveEditedUser(selectedUser)" >
+                    <div class="row" v-if="selectedTab === 1" @keyup.enter="saveEditedUser(selectedUser)"
+                        @keyup.esc="cancelEdit(selectedUser)" @blur="saveEditedUser(selectedUser)">
                         <!-- User Information -->
                         <div class="col-md-12 user-card-info">
                             <div class="card">
                                 <div class="card-header">
                                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                                      <div class="float-left">
-                                        User Information - [[ selectedUser.name ]]
-                                        <i class="fas fa-circle" :style="{ color: selectedUser.enabled ? 'green' : 'red' }" :title="selectedUser.enabled ? 'User Enabled' : 'User Disabled'"></i>
-                                      </div>
-                                      <div v-if="selectedUser.isEditing">
-                                        <!-- Enable button -->
-                                        <div class="form-check" style="display: inline-block; text-align: center; margin-right: 20px;">
-                                          <input class="form-check-input" type="checkbox" id="enabled" v-model="selectedUser.enabled">
-                                          <label class="form-check-label" for="enabled">Enable User</label>
+                                        <div class="float-left">
+                                            User Information - [[ selectedUser.name ]]
+                                            <i class="fas fa-circle"
+                                                :style="{ color: selectedUser.enabled ? 'green' : 'red' }"
+                                                :title="selectedUser.enabled ? 'User Enabled' : 'User Disabled'"></i>
                                         </div>
-                                        <div class="tab-action-btn" style="display: inline-block; text-align: center;">
-                                          <button type="button" class="btn btn-primary save-btn" @click="saveEditedUser(selectedUser)">Save</button>
-                                          <button type="button" class="btn btn-secondary cancelEdit-btn" @click="cancelEdit(selectedUser)">Cancel</button>
+                                        <div v-if="selectedUser.isEditing">
+                                            <!-- Enable button -->
+                                            <div class="form-check"
+                                                style="display: inline-block; text-align: center; margin-right: 20px;">
+                                                <input class="form-check-input" type="checkbox" id="enabled"
+                                                    v-model="selectedUser.enabled">
+                                                <label class="form-check-label" for="enabled">Enable User</label>
+                                            </div>
+                                            <div class="tab-action-btn"
+                                                style="display: inline-block; text-align: center;">
+                                                <button type="button" class="btn btn-primary save-btn"
+                                                    @click="saveEditedUser(selectedUser)">Save</button>
+                                                <button type="button" class="btn btn-secondary cancelEdit-btn"
+                                                    @click="cancelEdit(selectedUser)">Cancel</button>
+                                            </div>
                                         </div>
-                                      </div>
                                     </div>
-                                  </div>
-                                  
+                                </div>
+
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-6">
@@ -473,7 +519,8 @@
                                                     v-model="selectedUser.name" required>
                                             </template>
                                             <template v-else>
-                                                <div class="form-control-static">[[ selectedUser.name || '_ _ _' ]]</div>
+                                                <div class="form-control-static">[[ selectedUser.name || '_ _ _' ]]
+                                                </div>
                                             </template>
                                         </div>
                                         <div class="col-md-3">
@@ -483,7 +530,8 @@
                                                     v-model="selectedUser.firstName" required>
                                             </template>
                                             <template v-else>
-                                                <div class="form-control-static">[[ selectedUser.firstName || '_ _ _' ]]</div>
+                                                <div class="form-control-static">[[ selectedUser.firstName || '_ _ _' ]]
+                                                </div>
                                             </template>
                                         </div>
                                         <div class="col-md-3">
@@ -493,7 +541,8 @@
                                                     v-model="selectedUser.lastName" required>
                                             </template>
                                             <template v-else>
-                                                <div class="form-control-static">[[ selectedUser.lastName || '_ _ _' ]]</div>
+                                                <div class="form-control-static">[[ selectedUser.lastName || '_ _ _' ]]
+                                                </div>
                                             </template>
                                         </div>
                                         <div class="col-md-6">
@@ -503,7 +552,8 @@
                                                     v-model="selectedUser.email" required>
                                             </template>
                                             <template v-else>
-                                                <div class="form-control-static">[[ selectedUser.email || '_ _ _' ]]</div>
+                                                <div class="form-control-static">[[ selectedUser.email || '_ _ _' ]]
+                                                </div>
                                             </template>
                                         </div>
                                         <div class="col-md-6">
@@ -513,7 +563,8 @@
                                                     v-model="selectedUser.password" required>
                                             </template>
                                             <template v-else>
-                                                <div class="form-control-static">[[ selectedUser.password || '_ _ _' ]]</div>
+                                                <div class="form-control-static">[[ selectedUser.password || '_ _ _' ]]
+                                                </div>
                                             </template>
                                         </div>
                                     </div>
@@ -530,34 +581,41 @@
                                         <div class="col-md-4">
                                             <label for="phone" class="form-label">Phone</label>
                                             <template v-if="selectedUser.isEditing">
-                                                <input type="tel" class="form-control" id="phone" v-model="selectedUser.phone" required>
+                                                <input type="tel" class="form-control" id="phone"
+                                                    v-model="selectedUser.phone" required>
                                             </template>
                                             <template v-else>
-                                                <div class="form-control-static">[[ selectedUser.phone || '_ _ _' ]]</div>
+                                                <div class="form-control-static">[[ selectedUser.phone || '_ _ _' ]]
+                                                </div>
                                             </template>
                                         </div>
                                         <div class="col-md-8">
                                             <label for="address" class="form-label">Address</label>
                                             <template v-if="selectedUser.isEditing">
-                                                <input type="text" class="form-control" id="address" v-model="selectedUser.address" required>
+                                                <input type="text" class="form-control" id="address"
+                                                    v-model="selectedUser.address" required>
                                             </template>
                                             <template v-else>
-                                                <div class="form-control-static">[[ selectedUser.address || '_ _ _' ]]</div>
+                                                <div class="form-control-static">[[ selectedUser.address || '_ _ _' ]]
+                                                </div>
                                             </template>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="state" class="form-label">State</label>
                                             <template v-if="selectedUser.isEditing">
-                                                <input type="text" class="form-control" id="state" v-model="selectedUser.state" required>
+                                                <input type="text" class="form-control" id="state"
+                                                    v-model="selectedUser.state" required>
                                             </template>
                                             <template v-else>
-                                                <div class="form-control-static">[[ selectedUser.state || '_ _ _' ]]</div>
+                                                <div class="form-control-static">[[ selectedUser.state || '_ _ _' ]]
+                                                </div>
                                             </template>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="pan" class="form-label">PAN</label>
                                             <template v-if="selectedUser.isEditing">
-                                                <input type="text" class="form-control" id="pan" v-model="selectedUser.pan" required>
+                                                <input type="text" class="form-control" id="pan"
+                                                    v-model="selectedUser.pan" required>
                                             </template>
                                             <template v-else>
                                                 <div class="form-control-static">[[ selectedUser.pan || '_ _ _' ]]</div>
@@ -567,7 +625,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="col-md-12 user-card-info">
                             <div class="card">
                                 <div class="card-header">
@@ -580,81 +638,99 @@
                                             <label for="role" class="form-label">Role</label>
                                             <template v-if="selectedUser.isEditing">
                                                 <!-- Modify the input type to select for role -->
-                                                <select class="form-select" id="role" v-model="selectedUser.role" required>
-                                                    <option v-for="(role, index) in Object.keys(ROLE_HIERARCHY)" :key="index" :value="index">
-                                                        [[ role || '_ _ _' ]]  <i :class="getRoleIconClass(role)" :style="{ color: getRoleIconColor(role) }"></i>
+                                                <select class="form-select" id="role" v-model="selectedUser.role"
+                                                    required>
+                                                    <option v-for="(role, index) in Object.keys(ROLE_HIERARCHY)"
+                                                        :key="index" :value="index">
+                                                        [[ role || '_ _ _' ]] <i :class="getRoleIconClass(role)"
+                                                            :style="{ color: getRoleIconColor(role) }"></i>
                                                     </option>
                                                 </select>
                                             </template>
                                             <template v-else>
-                                                <div class="form-control-static"> 
-                                                    [[ Object.keys(ROLE_HIERARCHY)[selectedUser.role] || '_ _ _' ]]  <i :class="getRoleIconClass(Object.keys(ROLE_HIERARCHY)[selectedUser.role])" :style="{ color: getRoleIconColor(Object.keys(ROLE_HIERARCHY)[selectedUser.role]) }"></i>
+                                                <div class="form-control-static">
+                                                    [[ Object.keys(ROLE_HIERARCHY)[selectedUser.role] || '_ _ _' ]] <i
+                                                        :class="getRoleIconClass(Object.keys(ROLE_HIERARCHY)[selectedUser.role])"
+                                                        :style="{ color: getRoleIconColor(Object.keys(ROLE_HIERARCHY)[selectedUser.role]) }"></i>
                                                 </div>
                                             </template>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="region" class="form-label">Region</label>
                                             <template v-if="selectedUser.isEditing">
-                                                <input type="text" class="form-control" id="region" v-model="selectedUser.region" required>
+                                                <input type="text" class="form-control" id="region"
+                                                    v-model="selectedUser.region" required>
                                             </template>
                                             <template v-else>
-                                                <div class="form-control-static">[[ selectedUser.region || '_ _ _' ]]</div>
+                                                <div class="form-control-static">[[ selectedUser.region || '_ _ _' ]]
+                                                </div>
                                             </template>
                                         </div>
-                        
+
                                         <!-- Dropdown fields -->
                                         <div class="col-md-6">
                                             <label for="associatedUser" class="form-label">Associated User</label>
                                             <template v-if="selectedUser.isEditing">
-                                               <input type="text" class="form-control" id="associatedUser" value="Drag and drop to associate user" disabled>
+                                                <input type="text" class="form-control" id="associatedUser"
+                                                    value="Drag and drop to associate user" disabled>
                                             </template>
                                             <template v-else>
-                                                <div class="form-control-static">[[ getAssociatedUserPath(selectedUser) || '_ _ _' ]]</div>
+                                                <div class="form-control-static">[[ getAssociatedUserPath(selectedUser)
+                                                    || '_ _ _' ]]</div>
                                             </template>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="groups" class="form-label">Groups (Department)</label>
                                             <template v-if="selectedUser.isEditing">
-                                                <select class="form-select" id="groups" v-model="selectedUser.groups" required>
+                                                <select class="form-select" id="groups" v-model="selectedUser.groups"
+                                                    required>
                                                     <!-- Option values will be populated dynamically -->
                                                     <!-- Replace the following example options with dynamic options -->
                                                     <option value="group1">Group 1</option>
                                                     <option value="group2">Group 2</option>
                                                     <option value="group3">Group 3</option>
                                                 </select>
-                                                <button type="button" class="btn btn-secondary mt-2">Add New Group</button>
+                                                <button type="button" class="btn btn-secondary mt-2">Add New
+                                                    Group</button>
                                             </template>
                                             <template v-else>
-                                                <div class="form-control-static">[[ selectedUser.groups || '_ _ _' ]]</div>
+                                                <div class="form-control-static">[[ selectedUser.groups || '_ _ _' ]]
+                                                </div>
                                             </template>
                                         </div>
-                        
-                                        
+
+
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
-                    
-                    
-                    
+
+
+
+
                         <!-- save btn -->
-                        <div class="col-md-12 user-tab-action-btn" style="display: flex; justify-content: center; align-items: center;" v-if="selectedUser.isEditing">
+                        <div class="col-md-12 user-tab-action-btn"
+                            style="display: flex; justify-content: center; align-items: center;"
+                            v-if="selectedUser.isEditing">
                             <div class="float-right">
                                 <!-- Enable button -->
-                                <div class="form-check" style="display: inline-block; text-align: center; margin-right: 20px;">
-                                    <input class="form-check-input" type="checkbox" id="enabled" v-model="selectedUser.enabled">
+                                <div class="form-check"
+                                    style="display: inline-block; text-align: center; margin-right: 20px;">
+                                    <input class="form-check-input" type="checkbox" id="enabled"
+                                        v-model="selectedUser.enabled">
                                     <label class="form-check-label" for="enabled">Enable User</label>
                                 </div>
                                 <div class="tab-action-btn" style="display: inline-block; text-align: center;">
-                                    <button type="button" class="btn btn-primary save-btn" @click="saveEditedUser(selectedUser)">Save</button>
-                                    <button type="button" class="btn btn-secondary cancelEdit-btn" @click="cancelEdit(selectedUser)">Cancel</button>
+                                    <button type="button" class="btn btn-primary save-btn"
+                                        @click="saveEditedUser(selectedUser)">Save</button>
+                                    <button type="button" class="btn btn-secondary cancelEdit-btn"
+                                        @click="cancelEdit(selectedUser)">Cancel</button>
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
-                     <!-- ================= User Tab END ====================== -->
+                    <!-- ================= User Tab END ====================== -->
 
                     <!-- ================= Associated Customers Tab START ====================== -->
                     <div class="row associated-customers-tab" v-if="selectedTab === 2">
@@ -662,18 +738,26 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="search-customer-input">
-                                        <input type="text" class="form-control" id="customer-search" v-model="customerSearchText" placeholder="Search Customers" style="max-width: 50%; margin-top: 20px;">
+                                        <input type="text" class="form-control" id="customer-search"
+                                            v-model="customerSearchText" placeholder="Search Customers"
+                                            style="max-width: 50%; margin-top: 20px;">
                                     </div>
                                     <div class="grid-col-box">
                                         <div class="grid-header">
-                                            <h4 style="text-align: center; margin-left: 10px;" class="header-text">Associated customers</h4>
-                                            <button type="button" class="btn btn-danger customer-bulk-delete-btn" v-if="selectedAssociatedCustomers.length > 1" @click="deleteSelectedAssociatedCustomers">Delete Selected</button>
+                                            <h4 style="text-align: center; margin-left: 10px;" class="header-text">
+                                                Associated customers</h4>
+                                            <button type="button" class="btn btn-danger customer-bulk-delete-btn"
+                                                v-if="selectedAssociatedCustomers.length > 1"
+                                                @click="deleteSelectedAssociatedCustomers">Delete Selected</button>
                                         </div>
-                                        
+
                                         <div id="grid1" class="grid">
-                                            <div class="grid-item" v-for="item in filteredAssociatedUsersTree" :key="item.id" :data-id="item.id">
+                                            <div class="grid-item" v-for="item in filteredAssociatedUsersTree"
+                                                :key="item.id" :data-id="item.id">
                                                 <div class="delete-customer-btn">
-                                                    <a class="delete-user-btn" @click="deleteSingleAssociatedCustomer(item)"><i class="far fa-trash-can"></i></a>
+                                                    <a class="delete-user-btn"
+                                                        @click="deleteSingleAssociatedCustomer(item)"><i
+                                                            class="far fa-trash-can"></i></a>
                                                 </div>
                                                 [[ item.name ]]
                                             </div>
@@ -682,72 +766,91 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
-                                  <div class="col-md-6">
+                                <div class="col-md-6">
 
                                     <div class="select-customer-group">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <select class="form-select" aria-label="Default select example" style="width: 100%; margin-top: 20px;" v-model="selectedCustomerGroup">
+                                                <select class="form-select" aria-label="Default select example"
+                                                    style="width: 100%; margin-top: 20px;"
+                                                    v-model="selectedCustomerGroup">
                                                     <option value="" disabled>Select Group</option>
-                                                    <option v-for="(value, key) in selectedUser.groups" :key="key" :value="key" >
-                                                      [[ key || '_ _ _' ]]
-                                                      <i class="far fa-trash-can"></i>
+                                                    <option v-for="(value, key) in selectedUser.groups" :key="key"
+                                                        :value="key">
+                                                        [[ key || '_ _ _' ]]
+                                                        <i class="far fa-trash-can"></i>
                                                     </option>
-                                                  </select>
+                                                </select>
                                             </div>
                                             <div class="col-md-6" style="margin-top: 10px">
                                                 <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-secondary mt-2" style="width: 100%;" data-bs-toggle="modal" data-bs-target="#addGroupModal">Add New Group</button>
+                                                <button type="button" class="btn btn-secondary mt-2"
+                                                    style="width: 100%;" data-bs-toggle="modal"
+                                                    data-bs-target="#addGroupModal">Add New Group</button>
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="addGroupModal" tabindex="-1" role="dialog" aria-labelledby="addGroupModalLabel" aria-hidden="true">
+                                                <div class="modal fade" id="addGroupModal" tabindex="-1" role="dialog"
+                                                    aria-labelledby="addGroupModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                        <h5 class="modal-title" id="addGroupModalLabel">Add New Group</h5>
-                                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="addGroupModalLabel">Add New
+                                                                    Group</h5>
+                                                                <button type="button" class="close"
+                                                                    data-bs-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <input type="text" class="form-control"
+                                                                    v-model="newGroupName"
+                                                                    placeholder="Enter group name">
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-primary"
+                                                                    data-bs-dismiss="modal" @click="addNewGroup">Add
+                                                                    Group</button>
+                                                            </div>
                                                         </div>
-                                                        <div class="modal-body">
-                                                            <input type="text" class="form-control" v-model="newGroupName" placeholder="Enter group name">
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" @click="addNewGroup">Add Group</button>
-                                                        </div>
-                                                    </div>
                                                     </div>
                                                 </div>
                                                 <!-- Modal -->
-                                                
-                                                
+
+
 
                                             </div>
                                         </div>
                                     </div>
                                     <div class="grid-col-box">
                                         <div class="grid-header">
-                                            <h4 style="text-align: center; margin-left: 10px;" class="header-text"> [[ selectedCustomerGroup || 'Select Group' ]] </h4>
-                                            <button type="button" class="btn btn-danger customer-bulk-delete-btn" v-if="selectedGroupCustomers.length > 1" @click="deleteSelectedGroupCustomers">Delete Selected</button>
+                                            <h4 style="text-align: center; margin-left: 10px;" class="header-text"> [[
+                                                selectedCustomerGroup || 'Select Group' ]] </h4>
+                                            <button type="button" class="btn btn-danger customer-bulk-delete-btn"
+                                                v-if="selectedGroupCustomers.length > 1"
+                                                @click="deleteSelectedGroupCustomers">Delete Selected</button>
                                         </div>
                                         <div id="grid2" class="grid">
-                                            <div class="grid-item" v-for="item in list2Data" :key="item.id" :data-id="item.id">
+                                            <div class="grid-item" v-for="item in list2Data" :key="item.id"
+                                                :data-id="item.id">
                                                 <div class="delete-customer-btn">
-                                                    <a class="delete-user-btn" @click="deleteSingleGroupCustomer(item)"><i class="far fa-trash-can"></i></a>
+                                                    <a class="delete-user-btn"
+                                                        @click="deleteSingleGroupCustomer(item)"><i
+                                                            class="far fa-trash-can"></i></a>
                                                 </div>
                                                 [[ item.name ]]
                                             </div>
                                         </div>
                                     </div>
-                                  </div>
+                                </div>
                             </div>
-                          </div>
+                        </div>
 
                     </div>
                     <!-- ================= Associated Customers Tab END ====================== -->
-                    
+
 
                 </div>
             </div>
@@ -757,38 +860,38 @@
 
 
     <script>
-       
+
         // from Config
         const CLOSE_OPEN_ICON_MAPPING = {
             CLOSE: "fas fa-caret-right",
             OPEN: "fas fa-caret-down",
         };
         const ROLE_MAPPING_OPTIONS = {
-            CEO: {'role_level': 0, 'role_name': 'CEO', 'role_icon': 'fas fa-user-tie ceo-icon' , 'color': 'rgba(0, 0, 0, 0.753)'},
-            Manager: {'role_level': 1, 'role_name': 'Manager', 'role_icon': 'fas fa-user-tie manager-icon' , 'color': 'rgba(0, 0, 213, 0.753)'},
-            ASO: {'role_level': 2, 'role_name': 'ASO', 'role_icon': 'fas fa-user-friends aso-icon' , 'color': 'rgba(0, 213, 0, 0.753)'},
-            RSO: {'role_level': 3, 'role_name': 'RSO', 'role_icon': 'fas fa-user-friends rso-icon' , 'color': 'rgba(213, 145, 0, 0.753)'},
-            Sales: {'role_level': 4, 'role_name': 'Sales', 'role_icon': 'fas fa-user-friends sales-icon' , 'color': 'rgba(213, 0, 0, 0.753)'},
+            CEO: { 'role_level': 0, 'role_name': 'CEO', 'role_icon': 'fas fa-user-tie ceo-icon', 'color': 'rgba(0, 0, 0, 0.753)' },
+            Manager: { 'role_level': 1, 'role_name': 'Manager', 'role_icon': 'fas fa-user-tie manager-icon', 'color': 'rgba(0, 0, 213, 0.753)' },
+            ASO: { 'role_level': 2, 'role_name': 'ASO', 'role_icon': 'fas fa-user-friends aso-icon', 'color': 'rgba(0, 213, 0, 0.753)' },
+            RSO: { 'role_level': 3, 'role_name': 'RSO', 'role_icon': 'fas fa-user-friends rso-icon', 'color': 'rgba(213, 145, 0, 0.753)' },
+            Sales: { 'role_level': 4, 'role_name': 'Sales', 'role_icon': 'fas fa-user-friends sales-icon', 'color': 'rgba(213, 0, 0, 0.753)' },
         };
         // from Config
 
         const OPEN_TRUE_ICON = CLOSE_OPEN_ICON_MAPPING.OPEN;
         const OPEN_FALSE_ICON = CLOSE_OPEN_ICON_MAPPING.CLOSE;
 
-        
+
         const ROLE_ICON_MAPPING = {};
         for (const roleName in ROLE_MAPPING_OPTIONS) {
-            ROLE_ICON_MAPPING[roleName] = {'icon':ROLE_MAPPING_OPTIONS[roleName].role_icon, 'color': ROLE_MAPPING_OPTIONS[roleName].color};
+            ROLE_ICON_MAPPING[roleName] = { 'icon': ROLE_MAPPING_OPTIONS[roleName].role_icon, 'color': ROLE_MAPPING_OPTIONS[roleName].color };
         }
 
         const ROLE_HIERARCHY = {};
         for (const roleName in ROLE_MAPPING_OPTIONS) {
-        ROLE_HIERARCHY[roleName] = ROLE_MAPPING_OPTIONS[roleName].role_level;
+            ROLE_HIERARCHY[roleName] = ROLE_MAPPING_OPTIONS[roleName].role_level;
         }
-              
+
 
         class TreeNode {
-            constructor(name, role, fromExternal=false, showActions = false, isEditing = false, enabled = true, username = "", firstName = "", lastName = "", email = "", password = "", phone = "", address = "", state = "", pan = "", region = "", associatedUser = "",  parent = null, grid1Data=[], grid2Data=[],groups= [], children = []) {
+            constructor(name, role, fromExternal = false, showActions = false, isEditing = false, enabled = true, username = "", firstName = "", lastName = "", email = "", password = "", phone = "", address = "", state = "", pan = "", region = "", associatedUser = "", parent = null, grid1Data = [], grid2Data = [], groups = [], children = []) {
                 this.name = name;
                 this.role = role;
                 this.fromExternal = fromExternal;
@@ -812,7 +915,7 @@
                 this.groups = groups;
                 this.children = children;
                 this.isDragPlaceHolder = false;
-                
+
                 for (const child of children) {
                     child.parent = this; // Set the parent reference for children
                 }
@@ -820,8 +923,8 @@
             }
         }
 
-          
-        
+
+
 
         const importData = {
             "username": "CEO1",
@@ -838,7 +941,7 @@
                     ],
                     "role": 1,
                     "children": {
-                        
+
                     },
                     "enabled": true,
                     "firstName": "Manager",
@@ -895,7 +998,7 @@
                         }
                     ],
                     groups: {
-                        "group1":[
+                        "group1": [
                             {
                                 "id": 1100,
                                 "name": "Customer 1"
@@ -917,7 +1020,7 @@
                                 "name": "Customer 5"
                             }
                         ],
-                        "group2":[
+                        "group2": [
                             {
                                 "id": 1105,
                                 "name": "Customer 21"
@@ -939,7 +1042,7 @@
                                 "name": "Customer 25"
                             }
                         ],
-                        "group3":[
+                        "group3": [
                             {
                                 "id": 1110,
                                 "name": "Customer 31"
@@ -962,7 +1065,7 @@
                             }
                         ]
                     }
-                
+
                 }
             },
             "enabled": true,
@@ -1020,7 +1123,7 @@
                 }
             ],
             groups: {
-                "group1":[
+                "group1": [
                     {
                         "id": 100,
                         "name": "Customer 11"
@@ -1042,7 +1145,7 @@
                         "name": "Customer 15"
                     }
                 ],
-                "group2":[
+                "group2": [
                     {
                         "id": 105,
                         "name": "Customer 221"
@@ -1064,7 +1167,7 @@
                         "name": "Customer 225"
                     }
                 ],
-                "group3":[
+                "group3": [
                     {
                         "id": 110,
                         "name": "Customer 331"
@@ -1100,7 +1203,7 @@
             ],
             "role": 0,
             "children": {
-                
+
             },
             "enabled": true,
             "firstName": "Unassigned",
@@ -1113,14 +1216,14 @@
             "pan": "sample pan",
             "region": "sample region",
         },
-            {
+        {
             "username": "Unassigned User 2",
             "path": [
                 "Unassigned User 2"
             ],
             "role": 0,
             "children": {
-                
+
             },
             "enabled": true,
             "firstName": "Unassigned",
@@ -1133,14 +1236,14 @@
             "pan": "sample pan",
             "region": "sample region",
         },
-            {
+        {
             "username": "Unassigned User 3",
             "path": [
                 "Unassigned User 3"
             ],
             "role": 0,
             "children": {
-                
+
             },
             "enabled": true,
             "firstName": "Unassigned",
@@ -1159,13 +1262,13 @@
         for (const user of unassigned_user_import_json_data) {
             UNASSIGNED_USERS.push(new TreeNode(user.username, user.role, true, false, false, user.enabled, user.username, user.firstName, user.lastName, user.email, user.password, user.phone, user.address, user.state, user.pan, user.region, user.associatedUser, user.groups, null, []));
         }
-        
+
 
         var app = new Vue({
             el: "#app",
             delimiters: ["[[", "]]"],
-            components: { Tree: DraggableTree },   
-            
+            components: { Tree: DraggableTree },
+
             data: {
                 treeData: [
                     new TreeNode("CEO1", ROLE_HIERARCHY.CEO, []),
@@ -1183,12 +1286,12 @@
                 dragEnabled: true,
                 ROLE_ICON_MAPPING: ROLE_ICON_MAPPING,
                 treeData: [],
-                toggleSelectUserEnable : false,
+                toggleSelectUserEnable: false,
                 selectedTab: 1,
                 searchText: "",
                 // associated customers tab
-                sortableGrid1 : null,
-                sortableGrid2 : null,
+                sortableGrid1: null,
+                sortableGrid2: null,
                 list1Data: [],
                 list2Data: [],
                 grid1Data: [],
@@ -1201,13 +1304,13 @@
                 selectedGroupCustomers: [],
                 newGroupName: "",
             },
-            
+
             computed: {
                 filteredUnassignedUsersTree() {
-                return this.unassignedUsersTree.filter((user) =>
-                    user.name.toLowerCase().includes(this.searchText.toLowerCase())
-                    
-                );
+                    return this.unassignedUsersTree.filter((user) =>
+                        user.name.toLowerCase().includes(this.searchText.toLowerCase())
+
+                    );
                 },
                 filteredAssociatedUsersTree() {
                     return this.list1Data.filter((user) =>
@@ -1216,25 +1319,25 @@
                 },
             },
             watch: {
-                treeData(newValue){
+                treeData(newValue) {
                     this.treeData = newValue;
                 },
-                exportJson(newValue){
+                exportJson(newValue) {
                     this.getExportJson();
                     console.log(this.exportJson);
-                    
+
                 },
-                selectedTab: function(newTab, oldTab) {
+                selectedTab: function (newTab, oldTab) {
                     if (newTab === 2) {
-                        this.selectedCustomerGroup = ""; 
+                        this.selectedCustomerGroup = "";
                         user = this.selectedUser;
                         grid1Data = user.grid1Data;
                         grid2Data = user.grid2Data;
                         this.initSortable(grid1Data, grid2Data);
-                        
-                    }else{
+
+                    } else {
                         // hide .grid-item using jquery
-                        
+
                         $('.grid-item').css('display', 'none');
                         // click on cancel button
                         var temp = this.selectedTab;
@@ -1244,32 +1347,32 @@
                         document.removeEventListener('click', this.onClickOutside);
                     }
                 },
-                selectedUser: function(newVal, oldVal) {
+                selectedUser: function (newVal, oldVal) {
                     this.selectedTab = 1;
                 },
                 selectedCustomerGroup(newVal, oldVal) {
-                    if (newVal) { 
+                    if (newVal) {
                         this.list2Data = this.selectedUser.groups[newVal];
-                    } 
+                    }
                     else {
                         this.list2Data = [];
                     }
                 },
 
-                
 
-                
+
+
             },
             methods: {
                 handleChangeUnassigned(node) {
-                 const updateChildRoles = (parentNode, newRole) => {
+                    const updateChildRoles = (parentNode, newRole) => {
                         this.updateRole(parentNode, newRole);
                         parentNode.role = newRole;
                         for (const childNode of parentNode.children) {
                             updateChildRoles(childNode, newRole + 1);
                         }
                     };
-                    
+
                     // Find the parent node of the current node
                     const parentNode = this.findParentNode(node, this.treeData[0]);
                     if (parentNode) {
@@ -1287,23 +1390,23 @@
                             this.unassignedUsersTree.splice(index, 1);
                         }
                     }
-                    
-                    
-                        
+
+
+
                 },
-                
+
                 handleTreeUpdateUnassigned(tree) {
-                // This is called when the unassigned tree is updated
-                console.log('The unassigned tree has been updated');
+                    // This is called when the unassigned tree is updated
+                    console.log('The unassigned tree has been updated');
                 },
                 handleTreeUpdate(updatedTreeData) {
                     this.treeData = updatedTreeData;
                 },
                 toggleUserDetails(user) {
-                    if(this.toggleSelectUserEnable){
+                    if (this.toggleSelectUserEnable) {
                         this.selectedUser = this.selectedUser === user ? null : user;
                     }
-                    else{
+                    else {
                         this.selectedUser = user;
                     }
                 },
@@ -1318,7 +1421,7 @@
                             updateChildRoles(childNode, newRole + 1);
                         }
                     };
-                    
+
                     // Find the parent node of the current node
                     const parentNode = this.findParentNode(node, this.treeData[0]);
                     if (parentNode) {
@@ -1399,7 +1502,7 @@
                     }
                 },
                 addChild(user) {
-                    const newNode = new TreeNode("New "+Object.keys(ROLE_HIERARCHY)[user.role + 1]+" User", user.role + 1, false, true, true);
+                    const newNode = new TreeNode("New " + Object.keys(ROLE_HIERARCHY)[user.role + 1] + " User", user.role + 1, false, true, true);
                     user.children.push(newNode);
                     this.editUser(newNode);
                     this.selectedUser = newNode;
@@ -1435,28 +1538,28 @@
                 },
                 initializeTreeFromJSON(jsonData) {
                     const dfs = (jsonNode) => {
-                        const newNode = new TreeNode(jsonNode.username, 
-                                                    jsonNode.role, 
-                                                    false,
-                                                    true,
-                                                    false,
-                                                    jsonNode.enabled,
-                                                    jsonNode.username,
-                                                    jsonNode.firstName,
-                                                    jsonNode.lastName,
-                                                    jsonNode.email,
-                                                    jsonNode.password,
-                                                    jsonNode.phone,
-                                                    jsonNode.address,
-                                                    jsonNode.state,
-                                                    jsonNode.pan,
-                                                    jsonNode.region,
-                                                    jsonNode.associatedUser,
-                                                    null,
-                                                    jsonNode.grid1Data,
-                                                    jsonNode.grid2Data,
-                                                    jsonNode.groups,
-                                                    []);
+                        const newNode = new TreeNode(jsonNode.username,
+                            jsonNode.role,
+                            false,
+                            true,
+                            false,
+                            jsonNode.enabled,
+                            jsonNode.username,
+                            jsonNode.firstName,
+                            jsonNode.lastName,
+                            jsonNode.email,
+                            jsonNode.password,
+                            jsonNode.phone,
+                            jsonNode.address,
+                            jsonNode.state,
+                            jsonNode.pan,
+                            jsonNode.region,
+                            jsonNode.associatedUser,
+                            null,
+                            jsonNode.grid1Data,
+                            jsonNode.grid2Data,
+                            jsonNode.groups,
+                            []);
                         newNode.children = Object.values(jsonNode.children).map(dfs);
                         return newNode;
                     };
@@ -1482,19 +1585,19 @@
                 },
                 getAssociatedUserPath(user) {
                     const dfs = (node) => {
-                    if (!node) return '';
-                    const path = node.name;
-                    
-                    if (node.parent) {
-                        return dfs(node.parent) + ', ' + path;
-                    } else {
-                        return path;
-                    }
+                        if (!node) return '';
+                        const path = node.name;
+
+                        if (node.parent) {
+                            return dfs(node.parent) + ', ' + path;
+                        } else {
+                            return path;
+                        }
                     };
-                    var fpath =  dfs(user.parent);
+                    var fpath = dfs(user.parent);
                     if (fpath) {
                         fpath = fpath.replace('undefined, ', '');
-                        return  fpath;
+                        return fpath;
                     } else {
                         return '';
                     }
@@ -1569,14 +1672,14 @@
                                     }
                                 }
                             }
-                            
+
                             this.selectedUser.groups[this.selectedCustomerGroup] = gridData;
 
                         };
 
                         const updateSelectedItemsGrid1 = () => {
                             // Use jQuery to find all items with the "sortable-selected" class in grid1
-                            const selectedItems = $("#grid1 .sortable-selected").map(function() {
+                            const selectedItems = $("#grid1 .sortable-selected").map(function () {
                                 return {
                                     id: $(this).data("id"),
                                     name: $(this).text().trim()
@@ -1588,7 +1691,7 @@
 
                         const updateSelectedItemsGrid2 = () => {
                             // Use jQuery to find all items with the "sortable-selected" class in grid2
-                            const selectedItems = $("#grid2 .sortable-selected").map(function() {
+                            const selectedItems = $("#grid2 .sortable-selected").map(function () {
                                 return {
                                     id: $(this).data("id"),
                                     name: $(this).text().trim()
@@ -1612,7 +1715,7 @@
                             animation: 150,
                             selectedClass: "sortable-selected",
                             onEnd: onEndGrid1,
-                            onSelect : updateSelectedItemsGrid1,
+                            onSelect: updateSelectedItemsGrid1,
                         });
 
                         // Initialize Sortable for grid2
@@ -1627,12 +1730,12 @@
                             animation: 150,
                             selectedClass: "sortable-selected",
                             onAdd: onAddGrid2,
-                            onSelect : updateSelectedItemsGrid2,
+                            onSelect: updateSelectedItemsGrid2,
                         });
                     });
                 },
-                updateGrid(oldVal, newVal){
-                    typeOfOldVal  = typeof oldVal;
+                updateGrid(oldVal, newVal) {
+                    typeOfOldVal = typeof oldVal;
 
                 },
                 destroySortable() {
@@ -1653,13 +1756,13 @@
                         sendToastNotification("Invalid group name or group already exists", "error");
                         return;
                     }
-                    
+
                     // Add the new group to the selected user's groups
                     this.$set(this.selectedUser.groups, this.newGroupName, []);
-                    
+
                     // Notify the user that the group was added successfully
                     sendToastNotification("Group added successfully", "success");
-                    
+
                     // Reset the new group name
                     this.newGroupName = "";
 
@@ -1667,7 +1770,7 @@
                     var addGroupModal = new bootstrap.Modal(document.getElementById('addGroupModal'));
                     addGroupModal.hide();
                 },
-                deleteSelectedAssociatedCustomers(){
+                deleteSelectedAssociatedCustomers() {
                     // if no item is selected then return
                     if (this.selectedAssociatedCustomers.length === 0) {
                         return;
@@ -1684,7 +1787,7 @@
                     }
                     this.selectedAssociatedCustomers = [];
                 },
-                deleteSelectedGroupCustomers(){
+                deleteSelectedGroupCustomers() {
                     // if no item is selected then return
                     if (this.selectedGroupCustomers.length === 0) {
                         return;
@@ -1701,7 +1804,7 @@
                     }
                     this.selectedGroupCustomers = [];
                 },
-                deleteSingleAssociatedCustomer(item){
+                deleteSingleAssociatedCustomer(item) {
                     // delete and remove the item from grid1 and selectedUser.grid1Data
                     const itemToRemove = grid1.querySelector(`[data-id="${item.id}"]`);
                     itemToRemove.parentNode.removeChild(itemToRemove);
@@ -1712,7 +1815,7 @@
                     }
                     this.selectedAssociatedCustomers = [];
                 },
-                deleteSingleGroupCustomer(item){
+                deleteSingleGroupCustomer(item) {
                     // delete and remove the item from grid2 and selectedUser.grid2Data
                     const itemToRemove = grid2.querySelector(`[data-id="${item.id}"]`);
                     itemToRemove.parentNode.removeChild(itemToRemove);
@@ -1726,25 +1829,25 @@
                 clearSelectedItems() {
                     this.selectedAssociatedCustomers = [];
                     this.selectedGroupCustomers = [];
-                },  
+                },
                 onClickOutside(event) {
                     const grid1 = document.getElementById('grid1');
                     const grid2 = document.getElementById('grid2');
-                    
+
                     if (!grid1.contains(event.target) && !grid2.contains(event.target)) {
                         this.clearSelectedItems();
                     }
-                    
+
                 },
 
 
-                    
+
 
             },
             mounted() {
                 // this.fetchUserData();
                 this.initializeTreeFromJSON(this.importData);
-                
+
             },
             beforeDestroy() {
                 // Unregister click event listener
