@@ -317,7 +317,7 @@
             position: relative;
         }
 
-        .delete-user-btn {
+        .delete-customer-btn-2 {
             display: none;
             position: absolute;
             top: -35px;
@@ -334,7 +334,7 @@
         }
 
         /* Show the delete button on hover */
-        .grid-item:hover .delete-user-btn {
+        .grid-item:hover .delete-customer-btn-2 {
             display: block;
         }
 
@@ -755,7 +755,7 @@
                                             <div class="grid-item" v-for="item in filteredAssociatedUsersTree"
                                                 :key="item.id" :data-id="item.id">
                                                 <div class="delete-customer-btn">
-                                                    <a class="delete-user-btn"
+                                                    <a class="delete-customer-btn-2"
                                                         @click="deleteSingleAssociatedCustomer(item)"><i
                                                             class="far fa-trash-can"></i></a>
                                                 </div>
@@ -836,7 +836,7 @@
                                             <div class="grid-item" v-for="item in list2Data" :key="item.id"
                                                 :data-id="item.id">
                                                 <div class="delete-customer-btn">
-                                                    <a class="delete-user-btn"
+                                                    <a class="delete-customer-btn-2"
                                                         @click="deleteSingleGroupCustomer(item)"><i
                                                             class="far fa-trash-can"></i></a>
                                                 </div>
