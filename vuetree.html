@@ -826,7 +826,7 @@
                                     </div>
                                     <div class="grid-col-box">
                                         <div class="grid-header">
-                                            <h4 style="text-align: center; margin-left: 10px;" class="header-text"> [[
+                                            <h4 style="text-align: center; margin-left: 10px;" class="header-text group-header"> [[
                                                 selectedCustomerGroup || 'Select Group' ]] </h4>
                                             <button type="button" class="btn btn-danger customer-bulk-delete-btn"
                                                 v-if="selectedGroupCustomers.length > 1"
@@ -850,6 +850,58 @@
 
                     </div>
                     <!-- ================= Associated Customers Tab END ====================== -->
+                    
+                    <!-- ================= Associated Products Tab START ====================== -->
+                    <div class="row associated-products-tab" v-if="selectedTab === 3">
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">First</th>
+                                <th scope="col">Last</th>
+                                <th scope="col">Handle</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">3</th>
+                                <td>Larry</td>
+                                <td>the Bird</td>
+                                <td>@twitter</td>
+                              </tr>
+                            </tbody>
+                            <!-- footer -->
+                            <tfoot>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="add-product-item undraggable">
+                                            <nav aria-label="Page navigation example">
+                                                <ul class="pagination">
+                                                  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                                </ul>
+                                              </nav>
+                                        </div>
+                                    </td>
+                                </tr>
+                          </table>
+                    </div>
+                    <!-- ================= Associated Products Tab END ====================== -->
 
 
                 </div>
@@ -1352,16 +1404,56 @@
                 },
                 selectedCustomerGroup(newVal, oldVal) {
                     if (newVal) {
-                        this.list2Data = this.selectedUser.groups[newVal];
+                        this.list2Data =[]
                     }
                     else {
                         this.list2Data = [];
                     }
                 },
+            },
+            updated() {
+                if (this.selectedTab === 2) {
+                    if (this.sortableGrid2) {
+                        if(this.selectedCustomerGroup) {
+                            var count = this.selectedUser.groups[this.selectedCustomerGroup].length;
+                            
+                            const convertGridItemsToObjectArray = (gridItems) => {
+                                return Array.from(gridItems).map(item => ({
+                                    "id": item.getAttribute("data-id"),
+                                    "name": item.innerText
+                                }));
+                            };
+                            const gridData = convertGridItemsToObjectArray(grid2.getElementsByClassName("grid-item"));
+                            const lenOfGridData = gridData.length;
+                            $('.group-header').text(this.selectedCustomerGroup + ' (' + count + ') (' + lenOfGridData + ')');
+                                grid2.innerHTML = '';
+                                for (const item of this.selectedUser.groups[this.selectedCustomerGroup]) {
+                                    const gridItem = document.createElement("div");
+                                    gridItem.classList.add("grid-item");
+                                    gridItem.setAttribute("data-id", item.id);
+                                    gridItem.innerText = item.name;
+                                    // add a button with an onclick event to call this.deleteSingleGroupCustomer by passing item with i with class far fa-trash-can inside of div with class delete-customer-btn with a tag with class delete-customer-btn-2
+                                    const deleteCustomerBtn = document.createElement("div");
+                                    deleteCustomerBtn.classList.add("delete-customer-btn");
+                                    const deleteCustomerBtn2 = document.createElement("a");
+                                    deleteCustomerBtn2.classList.add("delete-customer-btn-2");
+                                    const deleteCustomerBtn3 = document.createElement("i");
+                                    deleteCustomerBtn3.classList.add("far");
+                                    deleteCustomerBtn3.classList.add("fa-trash-can");
+                                    deleteCustomerBtn2.appendChild(deleteCustomerBtn3);
+                                    deleteCustomerBtn.appendChild(deleteCustomerBtn2);
+                                    gridItem.appendChild(deleteCustomerBtn);
+                                    deleteCustomerBtn2.addEventListener("click", (event) => {
+                                        this.deleteSingleGroupCustomer(item);
+                                    });
+                                    
+                                    grid2.appendChild(gridItem);
+                                }
+                                
 
-
-
-
+                        }
+                    }
+                }
             },
             methods: {
                 handleChangeUnassigned(node) {
@@ -1390,9 +1482,6 @@
                             this.unassignedUsersTree.splice(index, 1);
                         }
                     }
-
-
-
                 },
 
                 handleTreeUpdateUnassigned(tree) {

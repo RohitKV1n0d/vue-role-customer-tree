@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Hierarchy</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-draggable-nested-tree@latest/dist/vue-draggable-nested-tree.js"></script>
+    <script src="https://unpkg.com/tree-helper@latest/dist/tree-helper.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.24.3/vuedraggable.umd.js"
+        integrity="sha512-MPl1xjL9tTTJHmaWWTewqTJcNxl2pecJ0D0dAFHmeQo8of+F9uF7zb2bazCX7m45K3mKRg44L1xJDeFzjmjRtA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <!-- Latest Sortable -->
+    <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
+    <!-- Sortable Grid -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+        <style>
+            #enabled{
+                display: none;
+            }
+            .user-hierarchy-container {
+                margin: 10px !important;
+            }
+            .side-menu{
+                padding-left: 0px !important;
+            }
+            .profile_card {
+                display: none !important;
+            } 
+           
+        
+            .he-tree {
+                padding: 20px;
+                border-radius: 5px;
+            }
+        
+            .tree-node-inner {
+                padding: 5px;
+                border: 1px solid #ccc;
+                cursor: pointer;
+                border-radius: 5px;
+                max-width: fit-content;
+                min-width: 200px;
+            }
+        
+            .details-tab {
+                padding: 5px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                text-align: left !important;
+            }
+        
+        
+        
+            /* on hover  */
+            .tree-node-inner:hover {
+                background: #dddddd33;
+            }
+        
+            .draggable-placeholder-inner {
+                border: 1px dashed #f88800;
+                box-sizing: border-box;
+                background: #f888002a;
+                color: #0088f9;
+                text-align: center;
+                padding: 0;
+                display: flex;
+                align-items: center;
+            }
+        
+            .tree3 .tree-node-inner {
+                border: none;
+                padding: 0px;
+                max-width: fit-content;
+            }
+        
+            .tree3 .tree-node-inner-back:hover {
+                background: #ddd;
+            }
+        
+            .tree4 .tree-node-inner {
+                border: none;
+                border-bottom: 1px solid #ccc;
+                padding: 5px 10px;
+                background: #ccc;
+            }
+        
+            .tree4 .draggable-placeholder-inner {
+                background-color: orangered;
+            }
+        
+            .edit-user-btn {
+                text-decoration: none;
+                cursor: pointer;
+                display: inline-block;
+            }
+        
+            /* on hover turn to yellow */
+            .edit-user-btn:hover {
+                color: rgba(213, 145, 0, 0.753);
+            }
+        
+            .delete-user-btn {
+                text-decoration: none;
+                cursor: pointer;
+                display: inline-block;
+            }
+        
+            /* on hover turn to red */
+            .delete-user-btn:hover {
+                color: rgba(213, 0, 0, 0.753);
+            }
+        
+            .add-user-btn {
+                text-decoration: none;
+                cursor: pointer;
+                display: inline-block;
+            }
+        
+            /* on hover turn to green */
+            .add-user-btn:hover {
+                color: rgba(0, 213, 0, 0.753);
+            }
+        
+            .action-side {
+                margin-left: 20px;
+            }
+        
+            .red-box {
+                background-color: rgba(255, 0, 0, 0.414);
+            }
+        
+            .options {
+                margin-top: 10px;
+                border-radius: 5px;
+                padding: 2px;
+                border: 1px solid #ccc;
+                background-color: #f1f1f1;
+                font-size: 12px;
+            }
+        
+            .legend-box {
+                display: flex;
+                border-radius: 30px;
+                background-color: #f1f1f169;
+            }
+        
+            .legend-box>div {
+                display: flex;
+                /* equal spacing */
+                flex: 1;
+                /* center */
+                justify-content: center;
+                align-items: center;
+                margin-right: 10px;
+               
+            }
+        
+            .form-label {
+                font-size: 16px;
+                margin: 0px;
+            }
+        
+            .user-card-info {
+                margin-top: 20px;
+            }
+        
+            .tree-node-selected {
+                font-size: 16px;
+                font-weight: bold;
+            }
+        
+            .save-btn {
+                margin-top: 20px;
+                /* center */
+                margin-left: auto;
+            }
+        
+            .float-right {
+                float: right;
+            }
+        
+            .float-left {
+                float: left;
+            }
+        
+            .user-tab-action-btn {
+                margin-top: 20px;
+                display: flex;
+                align-items: center;
+            }
+        
+            .card .card-header {
+                box-shadow: none;
+                background-color: #fff;
+            }
+        
+            .nav-item {
+                cursor: pointer;
+            }
+            .unassigned-users-toggle{
+                cursor: pointer;
+            }
+            .unassigned-users {
+                margin-top: 20px;
+                border: 1px solid #ccc;
+                padding: 20px;
+                border-radius: 5px;
+            }
+            .user-hierarchy{
+                border: 1px solid #ccc;
+                padding: 20px;
+                border-radius: 5px;
+            }
+            
+        
+            .unassigned-users-tree{
+                max-height: 300px;
+                overflow-y: scroll;
+            }
+            .hierarchy-tree-main{
+                max-height: 386px;
+                overflow-y: scroll;
+            }
+        
+            .sortable-duplicate {
+                background-color: #ff0000;
+            }
+        
+        
+        
+            .grid {
+                display: flex;
+                flex-wrap: wrap;
+                margin-left: -10px;
+                max-height: 500px;
+                overflow-y: scroll;
+                min-height: 159px;
+        
+            }
+        
+            .grid-item {
+                /* 3  items per row, 10px padding on each side */
+                width: calc(50% - 20px);
+                /* rectangle padding */
+                padding: 25px 10px 25px 10px;
+                text-align: center;
+                border-radius: 10px;
+                margin-bottom: 20px;
+                /* space between rows */
+                margin: 10px;
+                box-sizing: border-box;
+                /* to include the padding in the item width */
+                background-color: #ffffff;
+                /* dropshadow */
+                box-shadow: 0px 0px 15px 0px #0000002c;
+            }
+        
+            .add-customer-item {
+                width: calc(50% - 20px);
+                /* rectangle padding */
+                padding: 25px 0px 25px 0px;
+                text-align: center;
+                border-radius: 10px;
+                margin-bottom: 20px;
+                /* space between rows */
+                margin: 10px;
+                box-sizing: border-box;
+                /* to include the padding in the item width */
+                background-color: #ffffff45;
+                border: 1px dashed #0000002c;
+                /* cursor click */
+                cursor: pointer;
+            }
+        
+            .tinted {
+                background-color: #f9c7c8;
+            }
+        
+            .sortable-selected {
+                background-color: #00000011 !important;
+                /* borken line border */
+                border: .5px dashed #0000002c !important;
+                /* font transform bold */
+                font-weight: bold !important;
+                z-index: 1 !important;
+                animation: shake 0.5s linear infinite;
+            }
+        
+            @keyframes shake {
+                0% {
+                    transform: translateX(0);
+                }
+        
+                25% {
+                    transform: translateX(-.5px) rotate(-.5deg);
+                }
+        
+                50% {
+                    transform: translateX(.5px) rotate(.5deg);
+                }
+        
+                75% {
+                    transform: translateX(-.5px) rotate(-.5deg);
+                }
+        
+                100% {
+                    transform: translateX(0);
+                }
+            }
+        
+            .grid-container {
+                border: 1px solid black;
+                padding: 10px;
+            }
+        
+            .filtered {
+                background-color: #f9c7c8;
+            }
+        
+            .grid-col-box {
+                margin: 5px;
+                padding: 10px;
+                /* border: 1px solid #D9D9D9; */
+                border-radius: 5px;
+                background-color: #f2f2f27a;
+                
+            }
+            ::-webkit-scrollbar {
+                width: 20px;
+            }
+        
+            ::-webkit-scrollbar-track {
+                background-color: transparent;
+            }
+        
+            ::-webkit-scrollbar-thumb {
+                background-color: #d6dee1;
+                border-radius: 20px;
+                border: 6px solid transparent;
+                background-clip: content-box;
+            }
+        
+            ::-webkit-scrollbar-thumb:hover {
+                background-color: #a8bbbf;
+            }
+        
+            .delete-customer-btn {
+                position: relative;
+            }
+        
+            .delete-customer-btn-2 {
+                display: none;
+                position: absolute;
+                top: -35px;
+                right: -20px;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                background-color: #ff000054;
+                /* Red background for the circle */
+                color: #ffffff;
+                /* White color for the trash icon */
+                text-align: center;
+                line-height: 28px;
+            }
+            .delete-btn-item-group-move-up{
+                top: -79px !important;
+            }
+        
+            /* Show the delete button on hover */
+            .grid-item:hover .delete-customer-btn-2 {
+                display: block;
+            }
+        
+            /* a: delete-customer-btn-2 on hover shoud turn red */
+            .grid-item:hover .delete-customer-btn-2:hover {
+                color: #ff0000;
+            }
+        
+            .grid-header {
+                /* everything should be inline */
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 10px;
+        
+            }
+        
+            .customer-bulk-delete-btn {
+                background-color: #ff000054;
+                border: none;
+                color: #ffffff;
+                padding: 5px 10px;
+                border-radius: 5px;
+                font-size: 12px;
+            }
+        
+            .hide-obj {
+                display: none !important;
+            }
+        
+            /* SELECT Should have display block */
+            select {
+                display: block !important;
+            }
+        
+            .center {
+                text-align: center;
+            }
+        
+            .paginationc {
+                display: inline-block;
+            }
+        
+            .pagination-items {
+                color: black;
+                float: left;
+                padding: 8px 16px;
+                text-decoration: none;
+                transition: background-color .3s;
+                margin: 0 1px;
+                border-radius: 7px;
+            }
+        
+            .pagination-active {
+                font-weight: bold;
+                color: rgb(0, 0, 0);
+                pointer-events: none;
+                background-color: #dddddd9a;
+        
+            }
+        
+            .pagination-items:hover:not(.pagination-active) {
+                background-color: #ddd;
+            }
+            .pagination-arrow:hover:not(.pagination-active) {
+                background-color: #ff880067;
+            }
+        
+        
+            .basic-modal {
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+                max-width: 50%;
+            }
+            
+            /* Modal Content/Box */
+            .basic-modal-content {
+                border-radius: 10px;
+                background-color: #fefefe;
+                margin: 15% auto; /* 15% from the top and centered */
+                padding: 20px;
+                border: 1px solid #888;
+                width: 500px; /* Could be more or less, depending on screen size */
+            }
+            
+        
+                /* The Close Button */
+            .close {
+                color: #aaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+        
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+           
+           
+            .chip {
+            display: inline-block;
+            padding: 0 12px;
+            height: 23px;
+            font-size: 11px;
+            line-height: 2;
+            border-radius: 25px;
+            background-color: #e0e0e0b0;
+            min-width: fit-content;
+            margin-right: 2px;
+            color: #000;
+            }
+                
+            .chip-closebtn {
+            padding-left: 7px;
+            color: #888;
+            font-weight: bold;
+            float: right;
+            font-size: 17px;
+            line-height: 23px;
+            cursor: pointer;
+            }
+        
+            .chip-closebtn:hover {
+            color: #000;
+            }
+            .table{
+                border: none;
+            }
+            .table th{
+                border: none;
+            }
+            .table td{
+                border: none;
+            }
+            .table thead th{
+                border: none;
+            }
+            .table tbody td{
+                border: none;
+            }
+            .table tbody tr{
+                border: none;
+            }
+            .table tbody tr td{
+                border: none;
+            }
+        
+            input[type="checkbox"]{
+                display: none;
+            }
+            .pagination-disabled{
+                pointer-events: none;
+                color: #000000a6;
+            }
+        
+        
+            
+            
+        </style>
+</head>
+
+<body>
+    <div id="app">
+
+        <div class="row">
+            <!-- ================= Products Category Hierarchy Start ======================  -->
+            <div class="col-4">
+                <h3>Product Hierarchy</h3>
+                <!-- ================= Legends Start ====================== -->
+                <!-- CEO:0, Manager:1, ASO:2, RSO:3, Sales:4 -->
+                <div class="legend-box">
+                    <div v-for="(roleName, index) in Object.keys(ROLE_ICON_MAPPING)" :key="roleName">
+                        <i :class="ROLE_ICON_MAPPING[roleName].icon"
+                            :style="{ color: ROLE_ICON_MAPPING[roleName].color }"></i>
+                        [[ roleName ]]
+                    </div>
+                </div>
+
+                <!-- ================= Legends End ====================== -->
+
+                <!-- ================= Products Category Tree Start ======================  -->
+                <Tree :data="treeData" draggable="false" @change="handleChange" :ondragend="handleDragEnd"
+                    @update="handleTreeUpdate" :indent="30" cross-tree="cross-tree">
+                    <div slot-scope="{ data, store }" :class="{
+                        'red-box': data.level > MAX_LEVEL,
+                        'tree-node-selected': selectedUser === data
+                    }">
+                        <template v-if="!data.isDragPlaceHolder">
+                            <div class="user-box" @mouseenter="data.showActions = true"
+                                @mouseleave="data.showActions = false" @click="toggleUserDetails(data)"
+                                style="display: flex; align-items: center; justify-content: space-between;">
+                                <div class="name-data-side">
+                                    <b v-if="data.children && data.children.length" @click="store.toggleOpen(data)">
+                                        <i :class="data.open ? OPEN_TRUE_ICON : OPEN_FALSE_ICON"></i>
+                                    </b>
+                                    <template>
+                                        <span @dblclick="editUser(data)" v-if="!data.isEditing">
+                                            [[ data.name ]]
+                                            <i :class="getRoleIconClass(Object.keys(ROLE_HIERARCHY)[data.level])"
+                                                :style="{ color: getRoleIconColor(Object.keys(ROLE_HIERARCHY)[data.level]) }"></i>
+                                        </span>
+                                        <!-- if editing show input to edit name -->
+                                        <input v-if="data.isEditing" v-model="data.name" @keyup.enter="saveEditedUser(data)"
+                                            @keyup.esc="cancelEdit(data)" @blur="cancelEdit(data)" />
+                                    </template>
+
+                                </div>
+                                <div class="action-side" v-show="data.showActions || data.isEditing">
+                                    <template v-if="!data.isEditing">
+                                        <a v-if="data.level < MAX_LEVEL" @click.stop="addChild(data)" data-bs-toggle="tooltip"
+                                            data-bs-placement="right" class="add-user-btn" title="Add Child">
+                                            <i class="far fa-square-plus"></i></a>
+                                        <a @click="editUser(data)" class="edit-user-btn"><i
+                                                class="fas fa-pen-to-square"></i></a>
+                                        <a @click="deleteUser(data)" class="delete-user-btn"><i
+                                                class="far fa-trash-can"></i></a>
+                                    </template>
+                                    <template v-else>
+                                        <a @click="saveEditedUser(data)"><i class="fas fa-save"></i></a>
+                                        <a @click="cancelEdit(data)"><i class="fas fa-times"></i></a>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </Tree>
+                <!-- ================= Products Category Tree ======================  -->
+
+
+                <!-- ================= Unassigned Users Start ====================== -->
+                <div class="col-md-12 unassigned-users" v-if="unassignedUsersTree.length > 0">
+                    <div class="container">
+                        <h4>Unassigned Users </h4>
+                        <input v-model="searchText" class="form-control" placeholder="Search users..." />
+                        <Tree :data="filteredUnassignedUsersTree" :draggable="dragEnabled" @change="handleChange"
+                            :ondragend="handleDragEnd" @update="handleTreeUpdate" cross-tree="cross-tree">
+                            <div slot-scope="{ data, store }" class="tree-node-unassigned">
+                                <div class="user-box">
+                                    <div class="name-data-side">
+                                        <span>[[ data.name ]]</span>
+                                    </div>
+                                    <div class="action-side" v-show="data.showActions || data.isEditing">
+                                        <!-- add if req -->
+                                    </div>
+                                </div>
+                            </div>
+                        </Tree>
+                    </div>
+                </div>
+                <!-- ================= Unassigned Users End ====================== -->
+
+                <!-- <label class="options drag-box">
+                    <input type="checkbox" v-model="dragEnabled"> Toggle Drag
+                </label> -->
+            </div>
+            <!-- ================= Users Hierarchy END ======================  -->
+
+
+            <!-- ================= Tabs Start ====================== -->
+            <div class="col-8 tab-container">
+                <div class="container details-tab" v-if="selectedUser">
+                    <!-- ================= Tabs Headers START ====================== -->
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a :class="selectedTab === 1 ? 'nav-link active' : 'nav-link'" @click="selectedTab = 1"
+                                aria-current="page">Products</a>
+                        </li>
+                    </ul>
+                    <!-- ================= Tabs Headers END ====================== -->
+
+                    <!-- ================= Associated Products Tab START ====================== -->
+                    <div class="row associated-products-tab" v-if="selectedTab === 1">
+                        <h4>
+                            Associated Products
+                        </h4>
+                        <input v-model="searchText" class="form-control" placeholder="Search users..." />
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Product Name</th>
+                                    <th scope="col">Product Code</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Groups</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Product 1</td>
+                                    <td>PROD100</td>
+                                    <td>Category 1</td>
+                                    <td>Group 1</td>
+                                    <td>
+                                        <a href="#"><i class="fas fa-pen-to-square"></i></a>
+                                        <a href="#"><i class="far fa-trash-can"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Product 2</td>
+                                    <td>PROD200</td>
+                                    <td>Category 2</td>
+                                    <td>Group 2</td>
+                                    <td>
+                                        <a href="#"><i class="fas fa-pen-to-square"></i></a>
+                                        <a href="#"><i class="far fa-trash-can"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Product 3</td>
+                                    <td>PROD300</td>
+                                    <td>Category 3</td>
+                                    <td>Group 3</td>
+                                    <td>
+                                        <a href="#"><i class="fas fa-pen-to-square"></i></a>
+                                        <a href="#"><i class="far fa-trash-can"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">4</th>
+                                    <td>Product 4</td>
+                                    <td>PROD400</td>
+                                    <td>Category 4</td>
+                                    <td>Group 4</td>
+                                    <td>
+                                        <a href="#"><i class="fas fa-pen-to-square"></i></a>
+                                        <a href="#"><i class="far fa-trash-can"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">5</th>
+                                    <td>Product 5</td>
+                                    <td>PROD500</td>
+                                    <td>Category 5</td>
+                                    <td>Group 5</td>
+                                    <td>
+                                        <a href="#"><i class="fas fa-pen-to-square"></i></a>
+                                        <a href="#"><i class="far fa-trash-can"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">6</th>
+                                    <td>Product 6</td>
+                                    <td>PROD600</td>
+                                    <td>Category 6</td>
+                                    <td>Group 6</td>
+                                    <td>
+                                        <a href="#"><i class="fas fa-pen-to-square"></i></a>
+                                        <a href="#"><i class="far fa-trash-can"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                </tr>
+
+
+                            </tbody>
+                            <!-- footer -->
+
+                        </table>
+                        <div class="center">
+                            <div class="paginationc">
+                                <a class="pagination-items pagination-arrow" href="#">&laquo;</a>
+                                <a class="pagination-items" href="#">1</a>
+                                <a class="pagination-items pagination-active" href="#" >2</a>
+                                <a class="pagination-items" href="#">3</a>
+                                <a class="pagination-items" href="#">...</a>
+                                <a class="pagination-items" href="#">12</a>
+                                <a class="pagination-items" href="#">13</a>
+                                <a class="pagination-items pagination-arrow" href="#">&raquo;</a>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <!-- ================= Associated Products Tab END ====================== -->
+
+
+                </div>
+            </div>
+            <!-- ================= Tabs End ====================== -->
+        </div>
+    </div>
+
+
+    <script>
+
+        // from Config
+        const CLOSE_OPEN_ICON_MAPPING = {
+            CLOSE: "fas fa-caret-right",
+            OPEN: "fas fa-caret-down",
+        };
+        const ROLE_MAPPING_OPTIONS = {
+            "Category 1": { 'role_level': 1, 'role_name': 'Category 1', 'role_icon': 'fas fa-boxes-stacked', 'color': 'rgba(0, 0, 0, 0.753)' },
+            "Category 2": { 'role_level': 2, 'role_name': 'Category 2', 'role_icon': 'fas fa-boxes-stacked', 'color': 'rgba(0, 0, 213, 0.753)' },
+            "Category 3": { 'role_level': 3, 'role_name': 'Category 3', 'role_icon': 'fas fa-boxes-stacked', 'color': 'rgba(0, 213, 0, 0.753)' },
+            "Category 4": { 'role_level': 4, 'role_name': 'Category 4', 'role_icon': 'fas fa-boxes-stacked', 'color': 'rgba(213, 145, 0, 0.753)' },
+        };
+        // from Config
+
+        const OPEN_TRUE_ICON = CLOSE_OPEN_ICON_MAPPING.OPEN;
+        const OPEN_FALSE_ICON = CLOSE_OPEN_ICON_MAPPING.CLOSE;
+
+
+        const ROLE_ICON_MAPPING = {};
+        for (const roleName in ROLE_MAPPING_OPTIONS) {
+            ROLE_ICON_MAPPING[roleName] = { 'icon': ROLE_MAPPING_OPTIONS[roleName].role_icon, 'color': ROLE_MAPPING_OPTIONS[roleName].color };
+        }
+
+        const ROLE_HIERARCHY = {};
+        for (const roleName in ROLE_MAPPING_OPTIONS) {
+            ROLE_HIERARCHY[roleName] = ROLE_MAPPING_OPTIONS[roleName].role_level;
+        }
+
+
+        class TreeNode {
+            constructor(name, level, fromExternal = false, showActions = false, isEditing = false, children = []) {
+                this.name = name;
+                this.level = level;
+                this.fromExternal = fromExternal;
+                this.showActions = showActions;
+                this.isEditing = isEditing;
+
+                for (const child of children) {
+                    child.parent = this; // Set the parent reference for children
+                }
+
+            }
+        }
+
+
+
+
+        const importData = {
+            "name": "Category 1",
+            "path": [
+                "Category 1"
+            ],
+            "level": 0,
+            "children": {
+                "0": {
+                    "name": "Category 2",
+                    "path": [
+                        "Category 1",
+                        "Category 2"
+                    ],
+                    "level": 1,
+                    "children": {
+
+                    },
+                    
+                }
+            }
+             };
+
+
+        const MAX_LEVEL = Object.keys(ROLE_HIERARCHY).length - 1;
+        const DraggableTree = window.vueDraggableNestedTree.DraggableTree;
+
+        const unassigned_user_import_json_data = [{
+            "username": "Unassigned User 1",
+            "path": [
+                "Unassigned User 1"
+            ],
+            "role": 0,
+            "children": {
+
+            },
+            "enabled": true,
+            "firstName": "Unassigned",
+            "lastName": "User 1",
+            "email": "sample@smaple.co",
+            "password": "sample",
+            "phone": "1234567890",
+            "address": "sample address",
+            "state": "sample state",
+            "pan": "sample pan",
+            "region": "sample region",
+        },
+        {
+            "username": "Unassigned User 2",
+            "path": [
+                "Unassigned User 2"
+            ],
+            "role": 0,
+            "children": {
+
+            },
+            "enabled": true,
+            "firstName": "Unassigned",
+            "lastName": "User 2",
+            "email": "sample@smaple.co",
+            "password": "sample",
+            "phone": "1234567890",
+            "address": "sample address",
+            "state": "sample state",
+            "pan": "sample pan",
+            "region": "sample region",
+        },
+        {
+            "username": "Unassigned User 3",
+            "path": [
+                "Unassigned User 3"
+            ],
+            "role": 0,
+            "children": {
+
+            },
+            "enabled": true,
+            "firstName": "Unassigned",
+            "lastName": "User 3",
+            "email": "sample@smaple.co",
+            "password": "sample",
+            "phone": "1234567890",
+            "address": "sample address",
+            "state": "sample state",
+            "pan": "sample pan",
+            "region": "sample region",
+        }
+        ];
+
+        const UNASSIGNED_USERS = [];
+        // for (const user of unassigned_user_import_json_data) {
+        //     UNASSIGNED_USERS.push(new TreeNode(user.username, user.level, true, false, false, user.enabled, user.username, user.firstName, user.lastName, user.email, user.password, user.phone, user.address, user.state, user.pan, user.region, user.associatedUser, user.groups, null, []));
+        // }
+
+
+        var app = new Vue({
+            el: "#app",
+            delimiters: ["[[", "]]"],
+            components: { Tree: DraggableTree },
+
+            data: {
+                treeData: [
+                ],
+                unassignedUsersTree: UNASSIGNED_USERS,
+                newUser: "",
+                OPEN_TRUE_ICON: OPEN_TRUE_ICON,
+                OPEN_FALSE_ICON: OPEN_FALSE_ICON,
+                selectedUser: null,
+                ROLE_HIERARCHY: ROLE_HIERARCHY,
+                MAX_LEVEL: MAX_LEVEL,
+                exportJson: {},
+                exportData: '',
+                importData: importData,
+                dragEnabled: true,
+                ROLE_ICON_MAPPING: ROLE_ICON_MAPPING,
+                treeData: [],
+                toggleSelectUserEnable: false,
+                selectedTab: 1,
+                searchText: "",
+                
+            },
+
+            computed: {
+                filteredUnassignedUsersTree() {
+                    return this.unassignedUsersTree.filter((user) =>
+                        user.name.toLowerCase().includes(this.searchText.toLowerCase())
+
+                    );
+                },
+                
+            },
+            watch: {
+                treeData(newValue) {
+                    this.treeData = newValue;
+                },
+                exportJson(newValue) {
+                    this.getExportJson();
+                    console.log(this.exportJson);
+                },
+                selectedUser: function (newVal, oldVal) {
+                    this.selectedTab = 1;
+                },
+               
+            },
+            methods: {
+                handleChangeUnassigned(node) {
+                    const updateChildRoles = (parentNode, newRole) => {
+                        this.updateRole(parentNode, newRole);
+                        parentNode.level = newRole;
+                        for (const childNode of parentNode.children) {
+                            updateChildRoles(childNode, newRole + 1);
+                        }
+                    };
+
+                    // Find the parent node of the current node
+                    const parentNode = this.findParentNode(node, this.treeData[0]);
+                    if (parentNode) {
+                        // Update the role of the node and its children
+                        updateChildRoles(node, parentNode.level + 1);
+                        this.editUser(node);
+                    }
+
+                    // check if node is in filteredUnassignedUsersTree and if not delete it from unassignedUsersTree
+                    const filteredUnassignedUsersTree = this.filteredUnassignedUsersTree;
+                    const index = filteredUnassignedUsersTree.findIndex((child) => child === node);
+                    if (index === -1) {
+                        const index = this.unassignedUsersTree.findIndex((child) => child === node);
+                        if (index !== -1) {
+                            this.unassignedUsersTree.splice(index, 1);
+                        }
+                    }
+                },
+
+                handleTreeUpdateUnassigned(tree) {
+                    // This is called when the unassigned tree is updated
+                    console.log('The unassigned tree has been updated');
+                },
+                handleTreeUpdate(updatedTreeData) {
+                    this.treeData = updatedTreeData;
+                },
+                toggleUserDetails(user) {
+                    if (this.toggleSelectUserEnable) {
+                        this.selectedUser = this.selectedUser === user ? null : user;
+                    }
+                    else {
+                        this.selectedUser = user;
+                    }
+                },
+                updateRole(user, newRole) {
+                    Vue.set(user, "role", newRole);
+                },
+                handleChange(node) {
+                    const updateChildRoles = (parentNode, newRole) => {
+                        this.updateRole(parentNode, newRole);
+                        parentNode.level = newRole;
+                        for (const childNode of parentNode.children) {
+                            updateChildRoles(childNode, newRole + 1);
+                        }
+                    };
+
+                    // Find the parent node of the current node
+                    const parentNode = this.findParentNode(node, this.treeData[0]);
+                    if (parentNode) {
+                        // Update the role of the node and its children
+                        updateChildRoles(node, parentNode.level + 1);
+                        this.editUser(node);
+                    }
+
+                    // if treeData has any children that have fromExternal true then return
+                    const filteredUnassignedUsersTree = this.filteredUnassignedUsersTree;
+                    const index = filteredUnassignedUsersTree.findIndex((child) => child === node);
+                    if (index === -1) {
+                        const index = this.unassignedUsersTree.findIndex((child) => child === node);
+                        if (index !== -1) {
+                            this.unassignedUsersTree.splice(index, 1);
+                        }
+                    }
+                },
+                handleDragEnd(node, draggableHelperInfo) {
+                    if (!this.dragEnabled) {
+                        sendToastNotification("Drag is disabled", "error");
+                        return false; // Disable the drag
+                    }
+                    if (this.treeData.length > 1) {
+                        // Only one root node is allowed
+                        sendToastNotification("Only one root node is allowed", "error");
+                        return false;
+                    }
+                    // if this.unassignedUsersTree has children then return false
+                    for (const childNode of this.unassignedUsersTree) {
+                        if (childNode.children.length > 0 && childNode.fromExternal) {
+                            sendToastNotification("Please Save Before adding more Users", "error");
+                            return false;
+                        }
+                    }
+                    return true;
+
+                },
+
+                editUser(user) {
+                    this.selectedUser = user;
+                    this.$set(user, "isEditing", true);
+                },
+
+                saveEditedUser(user) {
+                    if (user.name.trim() !== "") {
+                        this.$set(user, "isEditing", false);
+                    }
+                    user.fromExternal = false;
+                    sendToastNotification("User saved successfully", "success");
+                },
+
+                cancelEdit(user) {
+                    this.$set(user, "isEditing", false);
+                },
+
+                deleteUser(user) {
+                    const parentNode = this.findParentNode(user, this.treeData[0]);
+                    if (parentNode) {
+                        const index = parentNode.children.findIndex((child) => child === user);
+                        if (index !== -1) {
+                            parentNode.children.splice(index, 1);
+                        }
+                    }
+                    sendToastNotification("User deleted successfully", "success");
+                },
+                findParentNode(targetNode, currentNode) {
+                    if (currentNode.children.includes(targetNode)) {
+                        return currentNode;
+                    } else {
+                        for (const childNode of currentNode.children) {
+                            const parentNode = this.findParentNode(targetNode, childNode);
+                            if (parentNode) {
+                                return parentNode;
+                            }
+                        }
+                        return null;
+                    }
+                },
+                addChild(user) {
+                    const newNode = new TreeNode("New " + Object.keys(ROLE_HIERARCHY)[user.level + 1] + " User", user.level + 1, false, true, true);
+                    user.children.push(newNode);
+                    this.editUser(newNode);
+                    this.selectedUser = newNode;
+                },
+                getExportJson() {
+                    const dfs = (node) => {
+                        const newNode = {
+                            "name": node.name,
+                            "path": [],
+                            "level": node.level,
+                            "children": {},
+                        };
+                        newNode.children = node.children.map(dfs);
+                        return newNode;
+                    };
+                    if (this.treeData) {
+                        const rootNode = dfs(this.treeData[0]);
+                        this.exportJson = rootNode;
+                        this.exportData = JSON.stringify(rootNode);
+                    }
+                },
+                initializeTreeFromJSON(jsonData) {
+                    const dfs = (jsonNode) => {
+                        const newNode = new TreeNode(jsonNode.name,
+                            jsonNode.level,
+                            false,
+                            true,
+                            false,
+                            []);
+                        newNode.children = Object.values(jsonNode.children).map(dfs);
+                        return newNode;
+                    };
+
+                    if (jsonData) {
+                        const rootNode = dfs(jsonData);
+                        this.treeData = [rootNode];
+                    }
+                },
+                getRoleIconClass(roleName) {
+                    if (ROLE_ICON_MAPPING[roleName]) {
+                        return ROLE_ICON_MAPPING[roleName].icon;
+                    } else {
+                        return '';
+                    }
+                },
+                getRoleIconColor(roleName) {
+                    if (ROLE_ICON_MAPPING[roleName]) {
+                        return ROLE_ICON_MAPPING[roleName].color;
+                    } else {
+                        return '';
+                    }
+                },
+               
+            
+
+
+            },
+            mounted() {
+                this.initializeTreeFromJSON(this.importData);
+
+            },
+           
+        });
+
+
+
+        // sendToastNotification(message, type = "success") 
+        function sendToastNotification(message, type = "success") {
+            Toastify({
+                text: message,
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "right",
+                backgroundColor: type === "success" ? "#1cbe2285" : "#f44336c2",
+                stopOnFocus: true,
+                style: {
+                    borderRadius: "5px",
+                },
+            }).showToast();
+        }
+
+
+
+    </script>
+</body>
+
+</html>

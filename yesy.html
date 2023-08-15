@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue Draggable Example</title>
+  <!-- Latest Sortable -->
+  <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
+  <!-- Sortable Grid -->
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+    integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.5.2/vue.min.js"></script>
+  <!-- CDNJS :: Sortable (https://cdnjs.com/) -->
+  <script src="//cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
+  <!-- CDNJS :: Vue.Draggable (https://cdnjs.com/) -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.20.0/vuedraggable.umd.min.js"></script>
+
+  <style>
+    .selected {
+      background-color: #8d0000;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <template>
+      <div class="row">
+        <div class="col-3">
+          <h3>Draggable 1</h3>
+          <draggable class="dragArea list-group" :list="list1" :group="{ name: 'people', pull: 'clone', put: false }"
+            @change="log" @start="onDragStart" @end="onDragEnd" @select="onSelect" @deselect="onDeselect">
+            <div class="list-group-item" v-for="element in list1" :key="element.name"
+              :class="{ selected: isSelected(element) }">
+              {{ element.name }}
+            </div>
+          </draggable>
+        </div>
+
+        <div class="col-3">
+          <h3>Draggable 2</h3>
+          <draggable class="dragArea list-group" :list="list2" group="people" @change="log">
+            <div class="list-group-item" v-for="element in list2" :key="element.name">
+              {{ element.name }}
+            </div>
+          </draggable>
+        </div>
+
+        <!-- Add a component to display the raw data -->
+        <rawDisplayer class="col-3" :value="list1" title="List 1" />
+        <rawDisplayer class="col-3" :value="list2" title="List 2" />
+      </div>
+    </template>
+
+
+  </div>
+  <script>
+    Vue.component('draggable', vuedraggable);
+
+
+    var app = new Vue({
+      el: "#app",
+      data: {
+        list1: [
+          { name: "John", id: 1 },
+          { name: "Joao", id: 2 },
+          { name: "Jean", id: 3 },
+          { name: "Gerard", id: 4 }
+        ],
+        list2: [
+          { name: "Juan", id: 5 },
+          { name: "Edgard", id: 6 },
+          { name: "Johnson", id: 7 }
+        ],
+        selectedClass: "selected",
+        selectedItems: []
+      },
+      methods: {
+        log: function (evt) {
+          window.console.log(evt);
+        },
+        onDragStart: function (evt) {
+          // Clear the selected items when starting a drag
+          this.selectedItems = [];
+        },
+        onDragEnd: function (evt) {
+          // After the drag ends, deselect all selected items
+          this.selectedItems.forEach(item => (item.selected = false));
+          this.selectedItems = [];
+        },
+        onSelect: function (evt) {
+          // Add the selected item to the selectedItems array
+          this.selectedItems.push(evt.item);
+        },
+        onDeselect: function (evt) {
+          // Remove the deselected item from the selectedItems array
+          const index = this.selectedItems.indexOf(evt.item);
+          if (index !== -1) {
+            this.selectedItems.splice(index, 1);
+          }
+        },
+        isSelected: function (item) {
+          // Check if an item is selected
+          return this.selectedItems.includes(item);
+        }
+      }
+    });
+
+
+  </script>
+</body>
